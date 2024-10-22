@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fridge Finder</title>
+    <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+  <header>
+    <nav>
+        <a href="index.html" class="menu-item logo"><img src="img/fridge-icon.png" class="logo" alt="fridge icon"></a>
+        <div class="desktop-menu">
+            <a href="inventory.html" class="menu-item">Inventory</a>
+            <a href="database.html" class="menu-item">, Database</a>
+        </div>
+    </nav>
+</header>
+
+    <main>
+        <h2>Enter the item to put in the fridge:</h2>
+        <form action="submit" method="post">
+            <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" placeholder="Grocery Item Name"><br><br>
+                
+        <label for="amount">Amount:</label><br>
+        <input type="number" id="amount" name="amount" placeholder="Amount of the Item"><br><br>
+
+        <label for="expiration-year">Expiration Year: </label><br>
+        <input type="text" id="expiration-year" name="expiration-year" placeholder="Expiration Year"><br><br>
+
+        <label for="expiration-month">Expiration Month: </label><br>
+        <input type="text" id="expiration-month" name="expiration-month" placeholder="Expiration Month"><br><br>
+                
+        <label for="expiration-day">Expiration Day: </label><br>
+        <input type="text" id="expiration-day" name="expiration-day" placeholder="Expiration Day"><br><br>
+                
+        <br>
+        <br>
+        <div class="center-button">
+            <button type="button" class="colored-button" onclick="addToInventory()">Add to Inventory</button>
+        </div>
+
+        </form>
+
+        <h2>Items in Inventory:</h2>
+        <ul id="inventoryList"></ul>
+    </main>
+    <script src="/js/inventory.js"/>
+
+</body>
+</html>
