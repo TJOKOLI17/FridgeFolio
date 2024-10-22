@@ -1,14 +1,17 @@
 function addToInventory() {
-    const nameInput = document.getElementById("name").value;
-    const amountInput = document.getElementById("amount").value;
-    const expYearInput = document.getElementById("expiration-year").value;
-    const expMonthInput = document.getElementById("expiration-month").value;
-    const expDayInput = document.getElementById("expiration-day").value;
-
+    const name = document.getElementById("name").value;
+    const amount = document.getElementById("amount").value;
+    const expYear = Number(document.getElementById("expiration-year").value);
+    const expMonth = Number(document.getElementById("expiration-month").value);
+    const expDay = Number(document.getElementById("expiration-day").value);
+    const expDate = `${expMonth}/${expDay}/${expYear}`
+    console.log(typeof expDate)
     
-
-    if(!nameInput || !amountInput || !expYearInput || !expMonthInput || !expDayInput){
+    
+    if (!name || !amount || !expYear || !expMonth || !expDay){
         window.alert("Please provide information for all the fields.")
+    }else if (typeof(expDay) !== "number" || typeof(expMonth) !== "number" || typeof(expYear) !== "number"){
+        window.alert("Please enter valid numbers for date information")
     }else{
         // Clear the input values
         document.getElementById("name").value = "";
@@ -21,11 +24,9 @@ function addToInventory() {
         const inventoryList = document.getElementById("inventoryList");
         const listItem = document.createElement("li");
         listItem.innerHTML = 
-        `Name: ${nameInput}<br> 
-        Amount: ${amountInput}<br>  
-        Expiration Year: ${expYearInput}<br>  
-        Expiration Month: ${expMonthInput}<br>  
-        Expiration Day: ${expDayInput}<br><br> `
+        `Name: ${name}<br> 
+        Amount: ${amount}<br> 
+        Expiration Date: ${expDate}`
         inventoryList.appendChild(listItem);
     }
-  }
+}
