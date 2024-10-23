@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  httpd:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspace:delegated
+    command: /bin/sh -c "while sleep 1000; do :; done"

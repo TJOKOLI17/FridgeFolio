@@ -1,0 +1,16 @@
+{
+    "dockerComposeFile": "docker-compose.yml",
+    "workspaceFolder": "/workspace",
+    "service": "httpd",
+    "remoteUser": "vscode",
+    "forwardPorts": [
+        80,
+        443,
+        4200,
+        8000
+    ],
+    "extensions": [
+        "ms-python.vscode-pylance",
+        "GitHub.vscode-pull-request-github"
+    ]
+}
