@@ -1,1 +1,2 @@
 run uvicorn server: uvicorn backend.api.api:app --reload
+api_key: http://127.0.0.1:8000

@@ -1,4 +1,4 @@
-import { Item } from "./item";
+// import { Item } from "./item";
 
 function addToInventory() {
     const name = document.getElementById("name").value;
@@ -33,37 +33,55 @@ function addToInventory() {
             inventoryList.appendChild(listItem);
         }
 
-        item
+        // item
 
     }
 }
 
 // Example of using fetch to POST data to a FastAPI endpoint
 
-const postData = async () => {
-    const data = {
-        name: "John Doe",
-        age: 30
-    };
+// const postData = async () => {
+//     const data = {
+//         name: "John Doe",
+//         age: 30
+//     };
 
+//     try {
+//         const response = await fetch('http://localhost:8000/your-endpoint', {
+//             method: 'POST', // or 'PUT'
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify(data),
+//         });
+
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! status: ${response.status}`);
+//         }
+
+//         const responseData = await response.json();
+//         console.log('Success:', responseData);
+//     } catch (error) {
+//         console.error('Error:', error);
+//     }
+// };
+
+// postData();
+
+
+const apiKey = "http://127.0.0.1:8000"
+const fetchItems = async () => {
     try {
-        const response = await fetch('http://localhost:8000/your-endpoint', {
-            method: 'POST', // or 'PUT'
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        });
-
+        response = await fetch(apiKey);
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error("Error in fetching fridge items")
         }
 
-        const responseData = await response.json();
-        console.log('Success:', responseData);
-    } catch (error) {
-        console.error('Error:', error);
-    }
-};
+        data = await response.json()
+        console.log(data[0]);
 
-postData();
+    } catch (error) {
+        console.error(error);
+
+    }
+}
