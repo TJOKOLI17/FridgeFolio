@@ -22,7 +22,7 @@
 
     <main>
         <h2>Enter the item to put in the fridge:</h2>
-        <form action="submit" method="post">
+        <form method="post">
             <label for="name">Name:</label><br>
             <input type="text" id="name" name="name" placeholder="Grocery Item Name"><br><br>
 
@@ -41,16 +41,17 @@
             <br>
             <br>
             <div class="center-button">
-                <button type="button" class="colored-button" onclick="addToInventory()">Add to Inventory</button>
+                <button type="button" class="colored-button" onclick="addItemToInventory(event)">Add to
+                    Inventory</button>
             </div>
 
         </form>
-        <button class="colored-button" onclick="fetchItems()">Log Data</button>
+        <button class="colored-button" onclick="getItems()">Log Data</button>
 
-        <h2>Items in Inventory:</h2>
-        <ul id="inventoryList"></ul>
+        <!-- <h2>Items in Inventory:</h2>
+        <ul id="inventoryList"></ul> -->
     </main>
-    <script src="/js/inventory.js"></script>
+    <script src="/js/itemService.js"></script>
 
 </body>
 

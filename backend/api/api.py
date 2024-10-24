@@ -29,7 +29,3 @@ def update_item():
 @app.delete("/{item_id}", response_model=None)
 def delete_item(item_id:int): 
     delete(item_id)
-
-
-# create_item(ItemModel(name="Cheese Pizza", amount=1, expDate="2024/10/23"))
-# delete_item(2)
