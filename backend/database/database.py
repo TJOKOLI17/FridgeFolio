@@ -64,9 +64,7 @@ def read() -> list[ItemModel]:
     cursor.close()
     db.close()
     return items
-        
-
-    
+          
 # def update_item():
     
 def delete(item_id:int):
