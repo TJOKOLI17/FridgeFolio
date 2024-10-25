@@ -1,48 +1,48 @@
-html{
+html {
     color: #260801;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
 
-body{
+body {
     margin: 0px 0px 5% 0px;
     padding: 0px;
     background-color: #97E8D7;
 }
 
-header{
-    padding:2.5% 2.5% 2.5% 2.5%;
+header {
+    padding: 2.5% 2.5% 2.5% 2.5%;
     max-height: 60px;
-    background-color: #7dd6aa ;
+    background-color: #7dd6aa;
 }
 
-nav{
+nav {
     display: flex;
     max-height: 60px;
     justify-content: space-between;
     align-items: center;
 }
 
-.desktop-menu{
+.desktop-menu {
     display: flex;
     justify-content: space-between;
 }
 
-a{
+a {
     text-decoration: none;
     font-size: 20pt;
     font-family: 'Courier New', Courier, monospace;
 }
 
-main{
+main {
     margin: 0 10% 0 10%;
 }
 
-.logo{
+.logo {
     max-width: 50px;
     border-radius: 10px;
 }
 
-.shelf{
+.shelf {
     display: flex;
     background-color: #87d4da;
     margin: 2.5% 2.5% 2.5% 2.5%;
@@ -51,7 +51,7 @@ main{
     border: 2px dashed #6DADE8;
 }
 
-.freezer-shelf{
+.freezer-shelf {
     display: flex;
     background-color: #6DADE8;
     margin: 2.5% 2.5% 2.5% 2.5%;
@@ -60,7 +60,7 @@ main{
     border: 2px dashed #4d87bd;
 }
 
-.add-shelf{
+.add-shelf {
     display: flex;
     background-color: #f08080;
     margin: 2.5% 25% 2.5% 25%;
@@ -69,7 +69,7 @@ main{
     border: 2px dashed #cd5e5e;
 }
 
-.add-item{
+.add-item {
     display: flex;
     background-color: #f08080;
     margin: 2.5% 25% 2.5% 25%;
@@ -78,7 +78,7 @@ main{
     border: 2px dashed #cd5e5e;
 }
 
-.center-button{
+.center-button {
     text-align: center;
     display: flex;
     justify-content: center;
@@ -86,14 +86,20 @@ main{
 }
 
 .colored-button {
-    background-color: #0b6122; /* Example color: Dodger Blue */
-    color: #fff; /* Text color (e.g., white) */
-    padding: 30px 75px; /* Optional padding for better appearance */
-    border: solid; /* Optional border styling */
+    background-color: #0b6122;
+    /* Example color: Dodger Blue */
+    color: #fff;
+    /* Text color (e.g., white) */
+    padding: 30px 75px;
+    /* Optional padding for better appearance */
+    border: solid;
+    /* Optional border styling */
     border-color: #fff;
-    border-radius: 50px; /* Optional border radius for rounded corners */
-  }
+    border-radius: 50px;
+    /* Optional border radius for rounded corners */
+    cursor: pointer;
+}
 
-.shelf-name{
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+.shelf-name {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }

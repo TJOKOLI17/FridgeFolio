@@ -1,0 +1,82 @@
+body {
+    background-color: rgb(64, 107, 163);
+    color: white;
+    margin: 0;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    background-color: hsl(207, 55%, 77%);
+}
+
+img {
+    border-radius: 200px;
+}
+
+.logo {
+    width: 60px;
+    cursor: pointer;
+    /* border-radius: 200px; */
+    margin-left: 5px;
+    padding: 5px;
+    /* margin-right: 500px; */
+}
+
+#website-title {
+    color: black;
+    margin-left: 15px;
+}
+
+.menu-item {
+    font-size: 28px;
+    /* justify-self: flex-end; */
+    text-decoration: None;
+
+    font-family: sans-serif;
+    /* background-color: aquamarine; */
+    color: black;
+    border-radius: 5px;
+    padding: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.desktop-menu {
+    /* background-color: red; */
+    padding-right: 10px;
+    margin-left: auto;
+}
+
+.menu-item:hover {
+    background-color: hsl(207, 55%, 87%);
+}
+
+.item-container {
+    /* margin-left: 100px; */
+    /* background-color: red; */
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+}
+
+#item-list-title {
+    margin-left: 5px;
+}
+
+.delete-btn {
+    margin-left: auto;
+    width: 20px;
+    padding: 6px;
+    margin-right: 10px;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: hsl(0, 100%, 50%);
+}

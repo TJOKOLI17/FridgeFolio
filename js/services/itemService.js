@@ -1,11 +1,4 @@
-class ItemModel {
-    constructor(id, name, amount, expDate) {
-        this.id = id
-        this.name = name;
-        this.amount = amount;
-        this.expDate = expDate;
-    }
-}
+import { ItemModel } from "../model.js";
 
 const apiKey = "http://127.0.0.1:8000"
 

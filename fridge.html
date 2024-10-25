@@ -5,17 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fridge</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/fridge.css" />
 </head>
 
 <body>
-    <div class="desktop-menu">
-        <a href="index.html" class="menu-item">Home</a>
-        <a>, </a>
-        <a href="inventory.html" class="menu-item">Add</a>
-    </div>
-    <h2>Items in Inventory:</h2>
-    <ul id="inventory-list"></ul>
+    <nav>
+        <a href="index.html" class="logo"><img src="img/fridge-icon(1).png" class="logo" alt="fridge icon"></a>
+        <h2 id="website-title">FridgeFolio</h2>
+        <div class="desktop-menu">
+            <a href="inventory.html" class="menu-item">Add Item</a>
+        </div>
+    </nav>
+
+    <h2 id="item-list-title">Items in Inventory:</h2>
+    <ol id="inventory-list"></ol>
 
     <script type="module" src="/js/fridge.js"></script>
 </body>
