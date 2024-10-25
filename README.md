@@ -1,4 +1,4 @@
-# FridgFolio Web App
+# FridgeFolio Web App
 
 FridgeFolio is a simple web application that allows users to input and display items that they want to store in a fridge. It's designed to provide an easy way to keep track of items in your fridge.
 
