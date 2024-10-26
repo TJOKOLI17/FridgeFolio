@@ -6,20 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FridgeFolio</title>
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/navbar.css" />
 </head>
 
 <body>
-    <header>
-        <nav>
-            <a href="index.html" class="menu-item logo"><img src="img/fridge-icon(1).png" class="logo"
-                    alt="fridge icon"></a>
-            <div class="desktop-menu">
-                <a href="index.html" class="menu-item">Back</a>
-                <a>, </a>
-                <a href="fridge.html" class="menu-item"> Fridge</a>
-            </div>
-        </nav>
-    </header>
+    <nav>
+        <a href="index.html" class="menu-item logo"><img src="img/fridge-icon(1).png" class="logo"
+                alt="fridge icon"></a>
+        <h2 id="website-title">FridgeFolio</h2>
+        <div class="desktop-menu">
+            <a href="fridge.html" class="menu-item"> Fridge</a>
+        </div>
+    </nav>
+
 
     <main>
         <h2>Enter the item to put in the fridge:</h2>
@@ -46,12 +45,7 @@
             </div>
 
         </form>
-        <!-- <button class="colored-button" onclick="populateInventoryList()">Print Fridge Inventory</button> -->
-
-        <h2>Items in Inventory:</h2>
-        <ul id="inventory-list"></ul>
     </main>
-    <!-- <script src="/js/itemService.js"></script> -->
     <script type="module" src="/js/inventory.js"></script>
 
 </body>

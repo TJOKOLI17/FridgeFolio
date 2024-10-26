@@ -6,41 +6,13 @@ html {
 body {
     margin: 0px 0px 5% 0px;
     padding: 0px;
-    background-color: #97E8D7;
-}
-
-header {
-    padding: 2.5% 2.5% 2.5% 2.5%;
-    max-height: 60px;
-    background-color: #7dd6aa;
-}
-
-nav {
-    display: flex;
-    max-height: 60px;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.desktop-menu {
-    display: flex;
-    justify-content: space-between;
-}
-
-a {
-    text-decoration: none;
-    font-size: 20pt;
-    font-family: 'Courier New', Courier, monospace;
+    background-color: rgb(64, 107, 163);
 }
 
 main {
     margin: 0 10% 0 10%;
 }
 
-.logo {
-    max-width: 50px;
-    border-radius: 10px;
-}
 
 .shelf {
     display: flex;
