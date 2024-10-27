@@ -24,6 +24,13 @@ const toListItem = (item) => {
                         <div class="item-amount"><strong> Amount: </strong> ${item.amount}</div> 
                         <div class="item-exp-date expired"><strong> Expiration Date: </strong> ${new Date(item.expDate).toDateString()}</div>
                     </div>`;
+    } else if (isExpired(item.expDate, "today")) {
+        listItem.innerHTML = `
+                    <div class="item-model-container">
+                        <div class="item-name"><strong>Name: </strong> ${item.name}</div>
+                        <div class="item-amount"><strong> Amount: </strong> ${item.amount}</div> 
+                        <div class="item-exp-date last-day"><strong> Expiration Date: </strong> ${new Date(item.expDate).toDateString()}</div>
+                    </div>`;
     } else {
         listItem.innerHTML = `
                     <div class="item-model-container">
@@ -49,8 +56,14 @@ const toListItem = (item) => {
     inventoryList.appendChild(document.createElement('br'));
 };
 
-const isExpired = (date) => {
+const isExpired = (date, check = null) => {
     const today = new Date(String(new Date().toLocaleDateString()))
+
+    if (check == "today") {
+        const todayAsString = `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`
+        return date === todayAsString
+    }
+
     return new Date(date) < today
 }
 

@@ -5,14 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FridgeFolio</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/inventory.css" />
     <link rel="stylesheet" href="css/navbar.css" />
 </head>
 
 <body>
     <nav>
-        <a href="index.html" class="menu-item logo"><img src="img/fridge-icon(1).png" class="logo"
-                alt="fridge icon"></a>
+        <a href="index.html"><img src="img/fridge-icon(1).png" class="logo" alt="fridge icon"></a>
         <h2 id="website-title">FridgeFolio</h2>
         <div class="desktop-menu">
             <a href="fridge.html" class="menu-item"> Fridge</a>
@@ -23,26 +22,20 @@
     <main>
         <h2>Enter the item to put in the fridge:</h2>
         <form id="item-submit">
-            <label for="name">Name:</label><br>
-            <input type="text" id="name" name="name" placeholder="Grocery Item Name" required><br><br>
+            <div id="user-input">
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name" placeholder="Grocery Item Name" required><br><br>
 
-            <label for="amount">Amount:</label><br>
-            <input type="number" min="1" id="amount" name="amount" placeholder="Amount of the Item" required><br><br>
+                <label for="amount">Amount:</label><br>
+                <input type="number" min="1" id="amount" name="amount" placeholder="Amount of the Item"
+                    required><br><br>
 
-            <label for="expYear">Expiration Year: </label><br>
-            <input type="text" id="expYear" name="expYear" placeholder="Expiration Year" required><br><br>
-
-            <label for="expMonth">Expiration Month: </label><br>
-            <input type="text" id="expMonth" name="expMonth" placeholder="Expiration Month" required><br><br>
-
-            <label for="expDay">Expiration Day: </label><br>
-            <input type="text" id="expDay" name="expDay" placeholder="Expiration Day" required><br><br>
-
-            <br>
-            <br>
-            <div class="center-button">
-                <button type="submit" class="colored-button">Add to Inventory</button>
+                <label for="expDate">Expiration Date: </label><br>
+                <input type="date" id="expDate" name="expDate" required>
             </div>
+            <!-- <br>
+            <br> -->
+            <button type="submit" id="submit-btn">Add to Inventory</button>
 
         </form>
     </main>

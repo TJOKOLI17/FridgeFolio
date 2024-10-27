@@ -1,4 +1,4 @@
-import { ItemModel } from "../model.js";
+import { ItemModel } from "../models/ItemModel.js";
 
 const apiKey = "http://127.0.0.1:8000"
 
@@ -60,5 +60,4 @@ export const deleteItem = async (item) => {
     } catch (error) {
         throw new Error(error)
     }
-    // console.log(item);
 }

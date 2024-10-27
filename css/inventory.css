@@ -1,0 +1,58 @@
+body {
+    background-color: rgb(64, 107, 163);
+    color: white;
+    margin: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 95%;
+    border: 3px solid black;
+    border-radius: 100px;
+    margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h2 {
+    margin-left: 10px;
+}
+
+#item-submit {
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 25px;
+    /* background-color: green; */
+}
+
+input {
+    margin-top: 5px;
+    padding: 10px 50px;
+    border-radius: 10px;
+    border: none;
+}
+
+#submit-btn {
+    font-size: 15px;
+    /* width: 50px%; */
+    /* height: 50%; */
+    font-weight: bold;
+    padding: 20px 25px;
+    border: 2px solid black;
+    border-radius: 100px;
+    background-color: hsl(32, 100%, 50%);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#submit-btn:hover {
+    background-color: hsl(32, 100%, 45%);
+}

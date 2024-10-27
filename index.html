@@ -11,13 +11,11 @@
 
 <body>
     <nav>
-        <a href="index.html" class="menu-item"><img src="img/fridge-icon(1).png" class="logo" alt="fridge icon"></a>
+        <a href="index.html"><img src="img/fridge-icon(1).png" class="logo" alt="fridge icon"></a>
         <h2 id="website-title">FridgeFolio</h2>
         <div class="desktop-menu">
-            <a href="inventory.html" class="menu-item">Inventory</a>
-            <!-- <a>, </a> -->
+            <a href="inventory.html" class="menu-item">Add Item</a>
             <a href="fridge.html" class="menu-item">Fridge</a>
-
         </div>
     </nav>
     <main>
@@ -37,7 +35,20 @@
             <h1 class="shelf-name">Add Food</h1>
         </div>
     </main>
-    <script src="/js/index.js"></script>
+
+    <form>
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" placeholder="Username" required><br><br>
+
+        <label for="password">Password:</label><br>
+        <input type="text" id="password" name="password" placeholder="Password" required><br><br>
+
+        <input type="checkbox" id="registered">
+        <label for="registered">I already have an account</label><br><br>
+
+        <button type="submit" onclick="logIn(event)">Log In</button>
+    </form>
+    <script src="js/index.js"></script>
 </body>
 
 </html>

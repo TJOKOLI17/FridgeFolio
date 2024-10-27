@@ -9,6 +9,22 @@ body {
     margin-left: 5px;
 }
 
+#color-key {
+    display: flex;
+    /* justify-content: space-between; */
+}
+
+.color-key-item {
+    display: flex;
+    margin-right: 10px;
+}
+
+.color-block {
+    width: 20px;
+    margin-left: 5px;
+    background-color: red;
+}
+
 .list-item {
     display: flex;
     align-items: center;
@@ -34,6 +50,12 @@ body {
 
 .expired {
     background-color: red;
+    border-radius: 10px;
+}
+
+.last-day {
+    background-color: hsl(51, 100%, 45%);
+    color: black;
     border-radius: 10px;
 }
 
