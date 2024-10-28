@@ -1,6 +1,5 @@
 import { ItemModel } from "../models/ItemModel.js";
-
-const apiKey = "http://127.0.0.1:8000"
+import { apiKey } from "./key.js";
 
 
 export const getItems = async () => {
