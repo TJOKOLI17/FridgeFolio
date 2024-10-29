@@ -7,7 +7,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5500"],  # Adjust the origin as necessary
+    allow_origins=["http://localhost:5500", "http://127.0.0.1.5500"],  # Adjust the origin as necessary
     allow_credentials=True,
     allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
     allow_headers=["*"],  # Allows all headers
@@ -23,8 +23,8 @@ def create_item(item: ItemModel):
     return create(item)
     
 @app.put("/{item_id}")
-def update_item(): 
-    ...
+def update_item(item: ItemModel): 
+    update(item)
 
 @app.delete("/{item_id}", response_model=None)
 def delete_item(item_id:int): 

@@ -49,6 +49,11 @@ export const addItem = async (newItem) => {
 }
 
 export const updateItem = async (id) => {
+    //create new item object
+    //its id value should be item we are updating
+    //confirm it exists
+    //send it over the api
+    //update record in backend
 }
 
 export const deleteItem = async (item) => {

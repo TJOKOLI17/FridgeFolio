@@ -65,7 +65,11 @@ def read() -> list[ItemModel]:
     db.close()
     return items
           
-# def update_item():
+def update(item: ItemModel):
+    try:
+        ...
+    except:
+        ...
     
 def delete(item_id:int):
     open_or_create_Items_table()
