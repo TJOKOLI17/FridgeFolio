@@ -24,3 +24,7 @@ Expiration Day: Input the expiration day.
 To add an item to your inventory, fill out the form with the item details and click the "ADD TO INVENTORY" button.
 
 The entered item details will be displayed in a list below the form. The input fields will be cleared, allowing you to add more items easily.
+
+**Tech Stack**
+Frontend: HTML, CSS, JavaScript
+Backend: Python, FastAPI, SQLite
