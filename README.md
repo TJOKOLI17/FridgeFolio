@@ -28,4 +28,5 @@ The entered item details will be displayed in a list below the form. The input f
 **Tech Stack**
 
 Frontend: HTML, CSS, JavaScript
+
 Backend: Python, FastAPI, SQLite
