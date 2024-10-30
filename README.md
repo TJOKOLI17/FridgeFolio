@@ -26,6 +26,6 @@ To add an item to your inventory, fill out the form with the item details and cl
 The entered item details will be displayed in a list below the form. The input fields will be cleared, allowing you to add more items easily.
 
 **Tech Stack**
-Frontend: HTML, CSS, JavaScript
 
+Frontend: HTML, CSS, JavaScript
 Backend: Python, FastAPI, SQLite
