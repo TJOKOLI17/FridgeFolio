@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(64, 107, 163);
+    background-color: hsl(214, 44%, 45%);
     color: white;
     margin: 0;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -46,6 +46,35 @@ body {
 .item-amount,
 .item-exp-date {
     padding: 10px;
+}
+
+.amt-num {
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.amt-num:hover {
+    background-color: hsl(214, 44%, 55%);
+}
+
+.amt-num:active {
+    background-color: hsl(214, 44%, 35%);
+}
+
+.editable-num {
+    width: 4ch;
+    cursor: pointer;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: white;
+    background-color: hsl(214, 44%, 65%);
+    transition: background-color 0.3s ease;
+    ;
+
 }
 
 .expired {

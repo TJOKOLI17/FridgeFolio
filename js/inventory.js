@@ -1,4 +1,4 @@
-import { getItems, addItem, updateItem, deleteItem } from "./services/itemService.js";
+import { addItem } from "./services/itemService.js";
 
 const itemSubmit = document.getElementById("item-submit")
 

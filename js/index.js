@@ -15,6 +15,8 @@ const logIn = (event) => {
 
 /**
  * Register a new user in the database.
+ * @param username - user's name
+ * @param password - user's password
  */
 const createNewAccount = (username, password) => {
     console.log(`New account created for ${username} with password ${password}.`);
