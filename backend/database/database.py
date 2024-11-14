@@ -22,6 +22,7 @@ def open_or_create_Items_table():
     cursor.close(), db.commit(), db.close()
 
 def create(item: ItemModel) -> ItemModel:
+    """Create new item in the database"""
     open_or_create_Items_table()
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()
@@ -42,11 +43,12 @@ def create(item: ItemModel) -> ItemModel:
     return new_item
 
 def read() -> list[ItemModel]:
+    """Fetch all entries from the database"""
     open_or_create_Items_table()
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()
     items: list[ItemModel] = []
-    """Fetch all entries from the database"""
+
     cursor.execute('''
         SELECT * FROM Items ORDER BY expDate ASC
     ''')
@@ -64,12 +66,46 @@ def read() -> list[ItemModel]:
     cursor.close()
     db.close()
     return items
+
+def read_by_id(item_id) -> list[ItemModel] | None:
+    """Fetch specfic entry from the database"""
+    open_or_create_Items_table()
+    db = sqlite3.connect('Fridge.db')
+    cursor = db.cursor()
+    
+    cursor.execute(f"SELECT * FROM Items WHERE id = ?", (item_id,))
+    
+    entity = cursor.fetchone()
+    if(entity is None):
+        return None
+    found_item = ItemModel(id=entity[0], name=entity[1], amount=entity[2], expDate=entity[3])
+
+    cursor.close()
+    db.close()
+    return found_item
           
-def update(item: ItemModel):
-    try:
-        ...
-    except:
-        ...
+def update(item_id:int, item_amount:int) -> ItemModel | None:
+    """Update item's amount in the database"""
+    open_or_create_Items_table()
+    db = sqlite3.connect('Fridge.db')
+    cursor = db.cursor()
+
+    change_amount_query:str = "UPDATE Items SET amount = ? WHERE id = ?;"
+
+    cursor.execute(change_amount_query, (item_amount, item_id))
+    db.commit()
+
+    cursor.execute("SELECT * FROM Items WHERE id = ?", (item_id,))
+
+    entity = cursor.fetchone()
+    if entity is None:
+        return None
+    new_item = ItemModel(id=entity[0], name=entity[1], amount=entity[2], expDate=entity[3])
+
+    cursor.close()
+    db.close()
+
+    return new_item
     
 def delete(item_id:int):
     open_or_create_Items_table()
@@ -78,3 +114,4 @@ def delete(item_id:int):
 
     cursor.execute( f"DELETE FROM Items WHERE id = ?", (item_id,))
     db.commit()
+    cursor.close(), db.close()

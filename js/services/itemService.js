@@ -67,14 +67,14 @@ export const updateItem = async (modifiedItem) => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const currentItem = await response.json();
-        console.log('Success:', currentItem);
+        const updatedItem = await response.json();
+        console.log('Success:', updatedItem);
 
         return new ItemModel(
-            currentItem.id,
-            currentItem.name,
-            currentItem.amount,
-            currentItem.expDate
+            updatedItem.id,
+            updatedItem.name,
+            updatedItem.amount,
+            updatedItem.expDate
         )
     } catch (error) {
         throw new Error(error)

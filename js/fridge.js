@@ -1,3 +1,4 @@
+import { ItemModel } from "./models/ItemModel.js";
 import { getItems, updateItem, deleteItem } from "./services/itemService.js";
 
 const populateInventoryList = async () => {
@@ -159,18 +160,9 @@ const backToSpan = (input, value) => {
 
 
 const refreshItem = async (newValue, item) => {
-    console.log({
-        id: item[0],
-        name: item[1],
-        amt: newValue,
-        expDate: item[3]
-    })
-    // return updateItem({
-    //     id: item[0],
-    //     name: item[1],
-    //     amt: newValue,
-    //     expDate: item[3]
-    // })
+    const modifiedItem = new ItemModel(item[0], item[1], newValue, item[3])
+    console.log(modifiedItem)
+    return updateItem(modifiedItem)
 
 
 }

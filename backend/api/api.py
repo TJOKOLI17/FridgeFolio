@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from .model import ItemModel
 from ..database.database import * 
@@ -13,19 +13,28 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
-# Debugging print to see if items are getting appended
-@app.get("/", response_model=list[ItemModel])
+@app.get("/", response_model=list[ItemModel], tags=["Item"])
 async def get_items():
     return read()
 
-@app.post("/", response_model=ItemModel)
+@app.get("/{item_id}", response_model=ItemModel, tags=["Item"])
+async def get_item_by_id(item_id:int):
+    item = read_by_id(item_id)
+    if item is None:
+        raise HTTPException(status_code=404, detail={"id": item_id, "message": "Item not found"})
+    return read_by_id(item_id)
+
+@app.post("/", response_model=ItemModel, tags=["Item"])
 def create_item(item: ItemModel):
     return create(item)
     
-@app.put("/{item_id}")
+@app.put("/", response_model=ItemModel, tags=["Item"])
 def update_item(item: ItemModel): 
-    update(item)
+    updated_item:ItemModel = update(item.id, item.amount)
+    if updated_item is None:
+        raise HTTPException(status_code=404, detail={"id": item.id, "message": "Item not found"})
+    return updated_item
 
-@app.delete("/{item_id}", response_model=None)
+@app.delete("/{item_id}", response_model=None, tags=["Item"])
 def delete_item(item_id:int): 
     delete(item_id)
