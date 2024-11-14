@@ -48,12 +48,37 @@ export const addItem = async (newItem) => {
     }
 }
 
-export const updateItem = async (id) => {
+export const updateItem = async (modifiedItem) => {
     //create new item object
     //its id value should be item we are updating
     //confirm it exists
     //send it over the api
     //update record in backend
+    try {
+        const response = await fetch(apiKey, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(modifiedItem),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const currentItem = await response.json();
+        console.log('Success:', currentItem);
+
+        return new ItemModel(
+            currentItem.id,
+            currentItem.name,
+            currentItem.amount,
+            currentItem.expDate
+        )
+    } catch (error) {
+        throw new Error(error)
+    }
 
 }
 
