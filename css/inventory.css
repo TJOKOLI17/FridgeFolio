@@ -56,3 +56,39 @@ input {
 #submit-btn:hover {
     background-color: hsl(32, 100%, 45%);
 }
+
+/* STYLING FOR LIST ITEM */
+
+.list-item {
+    display: flex;
+    align-items: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border: 2.5px solid black;
+    border-radius: 5px;
+    width: 99%;
+    transition: border-color 0.3s ease;
+}
+
+
+.item-model-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.item-name,
+.item-amount,
+.item-exp-date {
+    padding: 10px;
+}
+
+.expired {
+    background-color: red;
+    border-radius: 10px;
+}
+
+.last-day {
+    background-color: hsl(51, 100%, 45%);
+    color: black;
+    border-radius: 10px;
+}

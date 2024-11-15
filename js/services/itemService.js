@@ -49,11 +49,6 @@ export const addItem = async (newItem) => {
 }
 
 export const updateItem = async (modifiedItem) => {
-    //create new item object
-    //its id value should be item we are updating
-    //confirm it exists
-    //send it over the api
-    //update record in backend
     try {
         const response = await fetch(apiKey, {
             method: 'PUT',

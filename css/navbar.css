@@ -16,6 +16,11 @@ img {
     cursor: pointer;
     margin-left: 5px;
     padding: 5px;
+    transition: filter 0.3s ease;
+}
+
+.logo:hover {
+    filter: brightness(1.15);
 }
 
 #website-title {
