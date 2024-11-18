@@ -18,6 +18,42 @@ def open_or_create_Items_table():
             expDate TEXT NOT NULL
         )
     ''')
+
+    #Create table to store deleted items
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS deletedItems(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            itemID INTEGER,
+            name TEXT,
+            amount INTEGER,
+            expDate TEXT
+        )
+    ''')
+
+    # cursor.execute('''
+    #     CREATE TRIGGER IF NOT EXISTS item_deletion
+    #     AFTER DELETE ON Items
+    #     BEGIN 
+    #         INSERT INTO deletedItems (itemID, name, amount, expDate)
+    #         VALUES (OLD.id, OLD.name, OLD.amount, OLD.expDate);
+    #         END;
+    # ''')
+
+    # Check if the trigger exists by querying the sqlite_master table
+    cursor.execute('''
+        SELECT name FROM sqlite_master WHERE type='trigger' AND name='item_deletion';
+    ''')
+    trigger_exists = cursor.fetchone()
+
+    if not trigger_exists:
+        # Create the trigger to log deletions
+        cursor.execute('''
+            CREATE TRIGGER item_deletion
+            AFTER DELETE ON Items
+            BEGIN
+                INSERT INTO deletedItems (itemID, name, amount, expDate) VALUES (OLD.id, OLD.name, OLD.amount, OLD.expDate);
+            END;
+        ''')
     
     cursor.close(), db.commit(), db.close()
 
@@ -49,9 +85,7 @@ def read() -> list[ItemModel]:
     cursor = db.cursor()
     items: list[ItemModel] = []
 
-    cursor.execute('''
-        SELECT * FROM Items ORDER BY expDate ASC
-    ''')
+    cursor.execute('''SELECT * FROM Items''')
     rows = cursor.fetchall()
 
     for row in rows:
@@ -61,6 +95,30 @@ def read() -> list[ItemModel]:
                     amount=row[2],     
                     expDate=row[3]
                 )
+        items.append(item)
+
+    cursor.close()
+    db.close()
+    return items
+
+def readDeleted() -> list[ItemModel]:
+    """Fetch all deleted entries from the database"""
+    open_or_create_Items_table()
+    db = sqlite3.connect('Fridge.db')
+    cursor = db.cursor()
+    items: list[ItemModel] = []
+
+    cursor.execute('''
+        SELECT * FROM deletedItems
+    ''')
+    rows = cursor.fetchall()
+    for row in rows:
+        item = ItemModel(
+            id = row[0],
+            name = row[2],
+            amount = row[3],
+            expDate = row[4]
+        )
         items.append(item)
 
     cursor.close()

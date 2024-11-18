@@ -20,6 +20,25 @@ export const getItems = async () => {
     }
 }
 
+export const get_deleted_items = async () => {
+    try {
+        let trash = [];
+        const response = await fetch(`${apiKey}/deleted`, {
+            method: 'GET',
+        });
+        if (!response.ok){
+            throw new Error("Error in fetching trash can")
+        }
+        const allDeletedItems = await response.json()
+        for (let item of allDeletedItems){
+            trash.push(new ItemModel(item.id, item.name, item.amount, item.expDate))
+        }
+        return trash
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 export const addItem = async (newItem) => {
     try {
         const response = await fetch(apiKey, {

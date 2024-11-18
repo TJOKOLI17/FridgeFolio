@@ -7,7 +7,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5500", "http://127.0.0.1.5500"],  # Adjust the origin as necessary
+    allow_origins=["*"],  # Adjust the origin as necessary
     allow_credentials=True,
     allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
     allow_headers=["*"],  # Allows all headers
@@ -38,3 +38,8 @@ def update_item(item: ItemModel):
 @app.delete("/{item_id}", response_model=None, tags=["Item"])
 def delete_item(item_id:int): 
     delete(item_id)
+
+#thrown away page
+@app.get("/deleted", response_model=list[ItemModel], tags=["Item"])
+async def get_deleted_items():
+    return readDeleted()
