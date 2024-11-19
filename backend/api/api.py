@@ -7,7 +7,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5500", "http://127.0.0.1.5500"],  # Adjust the origin as necessary
+    allow_origins=["*"],  # Adjust the origin as necessary
     allow_credentials=True,
     allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
     allow_headers=["*"],  # Allows all headers
@@ -16,6 +16,14 @@ app.add_middleware(
 @app.get("/", response_model=list[ItemModel], tags=["Item"])
 async def get_items():
     return read()
+
+#thrown away page
+@app.get("/deleted", response_model=list[ItemModel], tags=["Item"])
+async def get_deleted_items():
+    deleted_items:list[ItemModel] = read_deleted()
+    # if deleted_items is None:
+    #     raise HTTPException(status_code=404, detail={"message": "Items not found"})
+    return deleted_items
 
 @app.get("/{item_id}", response_model=ItemModel, tags=["Item"])
 async def get_item_by_id(item_id:int):
