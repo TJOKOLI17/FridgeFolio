@@ -22,7 +22,6 @@ def open_or_create_Items_table():
     #Create table to store deleted items
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS deletedItems(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
             itemID INTEGER,
             name TEXT,
             amount INTEGER,
@@ -108,16 +107,14 @@ def readDeleted() -> list[ItemModel]:
     cursor = db.cursor()
     items: list[ItemModel] = []
 
-    cursor.execute('''
-        SELECT * FROM deletedItems
-    ''')
+    cursor.execute('''SELECT * FROM deletedItems''')
     rows = cursor.fetchall()
     for row in rows:
         item = ItemModel(
             id = row[0],
-            name = row[2],
-            amount = row[3],
-            expDate = row[4]
+            name = row[1],
+            amount = row[2],
+            expDate = row[3]
         )
         items.append(item)
 
