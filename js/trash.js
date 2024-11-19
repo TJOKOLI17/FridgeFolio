@@ -10,7 +10,7 @@ const populateDeletedList = async () => {
         deletedFridgeItems.forEach((deletedFridgeItem) => {
             toListItem(deletedFridgeItem);
         })
-    } catch (error){
+    } catch (error) {
         console.error(error);
     }
 }

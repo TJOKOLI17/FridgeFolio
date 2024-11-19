@@ -22,10 +22,10 @@ def open_or_create_Items_table():
     #Create table to store deleted items
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS deletedItems(
-            itemID INTEGER,
-            name TEXT,
-            amount INTEGER,
-            expDate TEXT
+            id INTEGER,
+            name TEXT NOT NULL,
+            amount INTEGER NOT NULL,
+            expDate TEXT NOT NULL
         )
     ''')
 
@@ -33,7 +33,7 @@ def open_or_create_Items_table():
     #     CREATE TRIGGER IF NOT EXISTS item_deletion
     #     AFTER DELETE ON Items
     #     BEGIN 
-    #         INSERT INTO deletedItems (itemID, name, amount, expDate)
+    #         INSERT INTO deletedItems (id, name, amount, expDate)
     #         VALUES (OLD.id, OLD.name, OLD.amount, OLD.expDate);
     #         END;
     # ''')
@@ -50,11 +50,14 @@ def open_or_create_Items_table():
             CREATE TRIGGER item_deletion
             AFTER DELETE ON Items
             BEGIN
-                INSERT INTO deletedItems (itemID, name, amount, expDate) VALUES (OLD.id, OLD.name, OLD.amount, OLD.expDate);
+                INSERT INTO deletedItems (id, name, amount, expDate) VALUES (OLD.id, OLD.name, OLD.amount, OLD.expDate);
             END;
         ''')
     
-    cursor.close(), db.commit(), db.close()
+    cursor.close()
+    db.commit()
+    db.close()
+
 
 def create(item: ItemModel) -> ItemModel:
     """Create new item in the database"""
@@ -77,6 +80,7 @@ def create(item: ItemModel) -> ItemModel:
 
     return new_item
 
+
 def read() -> list[ItemModel]:
     """Fetch all entries from the database"""
     open_or_create_Items_table()
@@ -86,6 +90,9 @@ def read() -> list[ItemModel]:
 
     cursor.execute('''SELECT * FROM Items''')
     rows = cursor.fetchall()
+
+    if not rows:
+        return []
 
     for row in rows:
         item = ItemModel(
@@ -100,7 +107,8 @@ def read() -> list[ItemModel]:
     db.close()
     return items
 
-def readDeleted() -> list[ItemModel]:
+
+def read_deleted() -> list[ItemModel]:
     """Fetch all deleted entries from the database"""
     open_or_create_Items_table()
     db = sqlite3.connect('Fridge.db')
@@ -109,6 +117,9 @@ def readDeleted() -> list[ItemModel]:
 
     cursor.execute('''SELECT * FROM deletedItems''')
     rows = cursor.fetchall()
+    if not rows:
+        return []
+    
     for row in rows:
         item = ItemModel(
             id = row[0],
@@ -117,10 +128,12 @@ def readDeleted() -> list[ItemModel]:
             expDate = row[3]
         )
         items.append(item)
+        print(item.name)
 
     cursor.close()
     db.close()
     return items
+
 
 def read_by_id(item_id) -> list[ItemModel] | None:
     """Fetch specfic entry from the database"""
@@ -138,7 +151,8 @@ def read_by_id(item_id) -> list[ItemModel] | None:
     cursor.close()
     db.close()
     return found_item
-          
+
+
 def update(item_id:int, item_amount:int) -> ItemModel | None:
     """Update item's amount in the database"""
     open_or_create_Items_table()
@@ -162,6 +176,7 @@ def update(item_id:int, item_amount:int) -> ItemModel | None:
 
     return new_item
     
+
 def delete(item_id:int):
     open_or_create_Items_table()
     db = sqlite3.connect('Fridge.db')

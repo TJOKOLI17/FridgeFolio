@@ -17,6 +17,14 @@ app.add_middleware(
 async def get_items():
     return read()
 
+#thrown away page
+@app.get("/deleted", response_model=list[ItemModel], tags=["Item"])
+async def get_deleted_items():
+    deleted_items:list[ItemModel] = read_deleted()
+    # if deleted_items is None:
+    #     raise HTTPException(status_code=404, detail={"message": "Items not found"})
+    return deleted_items
+
 @app.get("/{item_id}", response_model=ItemModel, tags=["Item"])
 async def get_item_by_id(item_id:int):
     item = read_by_id(item_id)
@@ -38,8 +46,3 @@ def update_item(item: ItemModel):
 @app.delete("/{item_id}", response_model=None, tags=["Item"])
 def delete_item(item_id:int): 
     delete(item_id)
-
-#thrown away page
-@app.get("/deleted", response_model=list[ItemModel], tags=["Item"])
-async def get_deleted_items():
-    return readDeleted()
