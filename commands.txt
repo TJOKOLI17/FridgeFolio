@@ -1,2 +1,3 @@
 run uvicorn server: uvicorn backend.api.api:app --reload
+to install fastAPI: pip install -r requirements.txt
 api_key: http://127.0.0.1:8000

@@ -84,7 +84,7 @@ function enableEditMode(event, ...item) {
 
             // }
             // console.log(`amountInput.value: ${amountInput.value}, type of amountInput.value ${typeof amountInput.value}`)
-            // const newValue = Number(String(amountInput.value));  // Convert the input value to a number
+            const newValue = Number(String(amountInput.value));  // Convert the input value to a number
             // console.log(`newValue: ${newValue}, type of newValue ${typeof newValue}`)
             // Check if the new value is a valid number and greater than or equal to 0
 
