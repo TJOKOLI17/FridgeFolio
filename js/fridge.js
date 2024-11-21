@@ -8,7 +8,7 @@ const populateInventoryList = async () => {
         inventoryList.replaceChildren();
         const fridgeItems = await getItems() // ItemModel[]
         fridgeItems.forEach((fridgeItem) => {
-            toListItem(fridgeItem)
+            toListItem(fridgeItem);
         })
     } catch (error) {
         console.error(error);
