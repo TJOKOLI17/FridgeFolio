@@ -38,19 +38,22 @@
         </div>
     </main>
 
-    <form>
+    <form id = "loginform">
         <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" placeholder="Username" required><br><br>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required><br><br>
 
         <label for="password">Password:</label><br>
-        <input type="text" id="password" name="password" placeholder="Password" required><br><br>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required><br><br>
 
-        <input type="checkbox" id="registered">
-        <label for="registered">I already have an account</label><br><br>
 
-        <button type="submit" onclick="logIn(event)">Log In</button>
+
+        <button type="submit" onclick="logIn(event)">Login</button>
+        <button type="button" onclick="redirectToCreateAccount()">Create Account</button>
+
     </form>
-    <script src="js/index.js"></script>
+    <script src="js/index.js">
+     
+    </script>
 </body>
 
 </html>
