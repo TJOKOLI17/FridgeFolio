@@ -88,7 +88,7 @@ def read() -> list[ItemModel]:
     cursor = db.cursor()
     items: list[ItemModel] = []
 
-    cursor.execute('''SELECT * FROM Items''')
+    cursor.execute('''SELECT * FROM Items ORDER BY expDate''')
     rows = cursor.fetchall()
 
     if not rows:
@@ -115,7 +115,7 @@ def read_deleted() -> list[ItemModel]:
     cursor = db.cursor()
     items: list[ItemModel] = []
 
-    cursor.execute('''SELECT * FROM deletedItems''')
+    cursor.execute('''SELECT * FROM deletedItems ORDER BY expDate''')
     rows = cursor.fetchall()
     if not rows:
         return []
