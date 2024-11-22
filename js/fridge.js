@@ -60,7 +60,6 @@ const handleAmountInputUpdate = async (event, origValue, newValue, amountInput, 
     }
 }
 
-// const boundHandler = handleAmountInputUpdate.bind(null, origValue, newValue, amountInput, item);
 
 const backToSpan = (amountInput, value, item) => {
     amountInput.removeEventListener("keydown", boundHandler);
