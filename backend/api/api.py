@@ -45,4 +45,7 @@ def update_item(item: ItemModel):
 
 @app.delete("/{item_id}", response_model=None, tags=["Item"])
 def delete_item(item_id:int): 
+    item = read_by_id(item_id)
+    if item is None:
+        raise HTTPException(status_code=404, detail={"id": item_id, "message": "Item not found"})
     delete(item_id)
