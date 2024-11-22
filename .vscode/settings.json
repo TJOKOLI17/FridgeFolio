@@ -1,6 +1,11 @@
 {
     "liveServer.settings.ignoreFiles": [
         // website reloads when database file changes, so this lets us see how it would actually work in production.
-        "**/*"
-    ]
+        // "**/*"
+    ],
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }
