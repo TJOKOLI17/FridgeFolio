@@ -128,7 +128,6 @@ def read_deleted() -> list[ItemModel]:
             expDate = row[3]
         )
         items.append(item)
-        print(item.name)
 
     cursor.close()
     db.close()
