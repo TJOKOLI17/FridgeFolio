@@ -55,7 +55,6 @@ export const addItem = async (newItem) => {
         }
 
         const currentItem = await response.json();
-        console.log('Success:', currentItem);
 
         return new ItemModel(
             currentItem.id,
@@ -70,7 +69,9 @@ export const addItem = async (newItem) => {
 
 export const updateItem = async (modifiedItem) => {
     try {
-        const response = await fetch(apiKey, {
+        // const response = 
+
+        await fetch(apiKey, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -78,19 +79,18 @@ export const updateItem = async (modifiedItem) => {
             body: JSON.stringify(modifiedItem),
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        // if (!response.ok) {
+        //     throw new Error(`HTTP error! status: ${response.status}`);
+        // }
 
-        const updatedItem = await response.json();
-        console.log('Success:', updatedItem);
+        // const updatedItem = await response.json();
 
-        return new ItemModel(
-            updatedItem.id,
-            updatedItem.name,
-            updatedItem.amount,
-            updatedItem.expDate
-        )
+        // return new ItemModel(
+        //     updatedItem.id,
+        //     updatedItem.name,
+        //     updatedItem.amount,
+        //     updatedItem.expDate
+        // )
     } catch (error) {
         throw new Error(error)
     }

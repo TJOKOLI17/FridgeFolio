@@ -36,12 +36,11 @@ async def get_item_by_id(item_id:int):
 def create_item(item: ItemModel):
     return create(item)
     
-@app.put("/", response_model=ItemModel, tags=["Item"])
+@app.put("/", response_model=None, tags=["Item"])
 def update_item(item: ItemModel): 
     updated_item:ItemModel = update(item.id, item.amount)
     if updated_item is None:
         raise HTTPException(status_code=404, detail={"id": item.id, "message": "Item not found"})
-    return updated_item
 
 @app.delete("/{item_id}", response_model=None, tags=["Item"])
 def delete_item(item_id:int): 
