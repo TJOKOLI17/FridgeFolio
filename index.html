@@ -21,61 +21,47 @@
         </div>
     </nav>
 
-    <main>
-        <div class="shelf">
-            <h1 class="shelf-name">Shelf 1</h1>
-        </div>
-        <div class="shelf">
-            <h1 class="shelf-name">Shelf 2</h1>
-        </div>
-        <div class="freezer-shelf">
-            <h1 class="shelf-name">Freezer Shelf</h1>
-        </div>
-        <div class="add-shelf">
-            <h1 class="shelf-name">Add Shelf</h1>
-        </div>
-        <div class="add-item">
-            <h1 class="shelf-name">Add Food</h1>
-        </div>
-    </main>
-
     <!-- Login Form -->
-    <form id="loginform">
-        <h2>Login</h2>
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" placeholder="Enter your username" required><br><br>
+    <main>
+        <form id="loginform">
+            <h2>Login</h2>
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required><br><br>
 
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" placeholder="Enter your password" required><br><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required><br><br>
 
-        <button type="submit" onclick="logIn(event)">Login</button>
-        <button type="button" onclick="showCreateAccountForm()">Create Account</button>
-    </form>
+            <button type="submit" onclick="logIn(event)">Login</button>
+            <button type="button" onclick="showCreateAccountForm()">Create Account</button>
+        </form>
 
-    <!-- Create Account Form -->
-    <form id="createAccountForm" style="display: none;">
-        <h2>Create Account</h2>
-        <label for="newUsername">Username:</label><br>
-        <input type="text" id="newUsername" name="newUsername" placeholder="Enter your new username" required><br><br>
+        <!-- Create Account Form -->
+        <form id="createAccountForm" style="display: none;">
+            <h2>Create Account</h2>
+            <label for="newUsername">Username:</label><br>
+            <input type="text" id="newUsername" name="newUsername" placeholder="Enter your new username"
+                required><br><br>
 
-        <label for="newPassword">Password:</label><br>
-        <input type="password" id="newPassword" name="newPassword" placeholder="Enter your new password"
-            required><br><br>
+            <label for="newPassword">Password:</label><br>
+            <input type="password" id="newPassword" name="newPassword" placeholder="Enter your new password"
+                required><br><br>
 
-        <label for="confirmPassword">Confirm Password:</label><br>
-        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your new password"
-            required><br><br>
+            <label for="confirmPassword">Confirm Password:</label><br>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your new password"
+                required><br><br>
 
-        <button type="button" onclick="createAccount()">Create Account</button>
-        <button type="button" onclick="showLoginForm()">Cancel</button>
-    </form>
+            <button type="button" onclick="createAccount()">Create Account</button>
+            <button type="button" onclick="showLoginForm()">Cancel</button>
+        </form>
 
-    <!-- Logout Button -->
-    <form id="logoutSection" style="display: none;">
-        <h2>Welcome to FridgeFolio!</h2>
-        <p>You are now logged in.</p>
-        <button onclick="logOut()">Logout</button>
-    </form>
+        <!-- Logout Button -->
+        <form id="logoutSection" style="display: none;">
+            <h2>Welcome to FridgeFolio!</h2>
+            <p>You are now logged in.</p>
+            <button onclick="logOut()">Logout</button>
+        </form>
+
+    </main>
 
     <script src="js/index.js"></script>
 </body>
