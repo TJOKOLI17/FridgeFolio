@@ -4,7 +4,7 @@ const showCreateAccountForm = () => {
     document.getElementById("createAccountForm").style.display = "block";
 };
 
-/** Show the Login form*/
+// Show the Login form
 const showLoginForm = () => {
     document.getElementById("createAccountForm").style.display = "none";
     document.getElementById("loginform").style.display = "block";
