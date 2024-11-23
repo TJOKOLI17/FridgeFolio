@@ -1,35 +1,61 @@
+// Show the Create Account form
+const showCreateAccountForm = () => {
+    document.getElementById("loginform").style.display = "none";
+    document.getElementById("createAccountForm").style.display = "block";
+};
+
+// Show the Login form
+const showLoginForm = () => {
+    document.getElementById("createAccountForm").style.display = "none";
+    document.getElementById("loginform").style.display = "block";
+    document.getElementById("logoutSection").style.display = "none";
+};
+
+// Log In Functionality
 const logIn = (event) => {
     event.preventDefault();
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
-    const registered = document.getElementById("registered");
 
-    if (!username || !password) {
+    const storedUsername = localStorage.getItem("username");
+    const storedPassword = localStorage.getItem("password");
+
+    if (storedUsername === username && storedPassword === password) {
+        alert(`Welcome, ${username}!`);
+        document.getElementById("loginform").style.display = "none";
+        document.getElementById("createAccountForm").style.display = "none";
+        document.getElementById("logoutSection").style.display = "block";
+    } else {
+        alert("Invalid username or password. Please try again.");
+    }
+};
+
+// Create Account Functionality
+const createAccount = () => {
+    const newUsername = document.getElementById("newUsername").value;
+    const newPassword = document.getElementById("newPassword").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (!newUsername || !newPassword || !confirmPassword) {
         alert("Please fill in all fields.");
         return;
     }
 
-    if (!registered.checked) {
-        alert("Please click 'Create Account' to register.");
-                return;
-        }
+    if (newPassword !== confirmPassword) {
+        alert("Passwords do not match. Please try again.");
+        return;
+    }
 
-        console.log(`User ${username} logged in with password ${password}.`);
+    // Store the new user details in localStorage
+    localStorage.setItem("username", newUsername);
+    localStorage.setItem("password", newPassword);
 
-    };
-    const redirectToCreateAccount = () => {
-        window.location.href = "create_account.html"; // Redirects to account creation page
-    };
+    alert("Account created successfully! Please log in.");
+    showLoginForm();
+};
 
-    
-
-/**
- * Register a new user in the database.
- * @param username - user's name
- * @param password - user's password
- */
-
-const createNewAccount = (username, password) => {
-    console.log(`New account created for ${username} with password ${password}.`);
-    alert("Account successfully created! Please log in.");
-}
+// Log Out Functionality
+const logOut = () => {
+    alert("You have been logged out.");
+    showLoginForm();
+};
