@@ -1,98 +1,150 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 html {
+    font-size: 16px;
+    /* Base font size for easy scaling */
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color: #260801;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
 
 body {
-    margin: 0;
-    /* padding: 0px; */
+    /* margin: 0; */
     background-color: hsl(214, 44%, 45%);
-    color: white;
-}
-
-main {
-    width: 100%;
-    /* margin: 0 auto; */
-    height: fit-content;
-    display: flex;
-    align-items: center;
-    border-radius: 5px;
-    position: absolute;
-    top: 25%;
-    bottom: 25%;
-    background-color: hsl(164, 81%, 30%);
-}
-
-#homepage-logo {
-    width: 100%;
-    height: 100%;
-}
-
-#homepage-logo-container {
-    width: 100%;
-    height: 100%;
-    max-width: 700px;
-    min-width: 350px;
-    /* flex-shrink: ; */
-    /* background-color: red; */
-    margin-right: 10px;
-}
-
-
-.all-forms {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    align-self: center;
-    /* background-color: antiquewhite; */
-}
-
-h2 {
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    /* Ensure it fills the full viewport */
     color: white;
 }
 
-label {
-    color: white;
-}
-
-input {
-    width: 300px;
-    max-width: fit-content;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    border: none;
-    padding: 10px 30px;
-}
-
-
-.login-area {
-    width: 100%;
-    height: 100%;
-    /* background-color: chocolate; */
+/* Utility Classes */
+.center {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.account-buttons {
-    /* margin: 0 auto; */
+.flex-column {
     display: flex;
     flex-direction: column;
-    /* background-color: blue; */
+}
+
+/* Main Layout */
+main {
+    width: 100%;
+    height: fit-content;
+    max-width: 1200px;
+    margin: 20px auto;
+    /* Center with space above */
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    /* Wrap content responsively */
+    gap: 20px;
+    /* Space between children */
+    padding: 20px;
+    background-color: hsl(164, 81%, 30%);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Logo Container */
+#homepage-logo-container {
+    flex: 1 1 300px;
+    /* Flexible sizing: at least 300px, can grow */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* max-width: 800px; */
+    border-radius: 50px;
+}
+
+#homepage-logo {
+    width: 100%;
+    border-radius: 5px;
+    /* max-width: 400px; */
+    /* Ensure logo doesn't grow too large */
+    height: auto;
+    object-fit: contain;
+    /* Maintain aspect ratio */
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+/* Login and Forms */
+.login-area {
+    flex: 1 1 300px;
+    /* Flexible sizing */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* gap: 20px; */
+}
+
+/* Form Styles */
+.all-forms {
+    width: 100%;
+    /* max-width: 400px; */
+    /* Forms are a fixed max width */
+    display: flex;
+    flex-direction: column;
+    /* gap: 15px; */
+    padding: 20px;
+    background-color: hsl(214, 30%, 20%);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* #createAccountForm {
+    margin: 0;
+} */
+
+
+
+input {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: hsl(153, 100%, 70%);
+}
+
+#logoutSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 .login-state-button {
-    width: 150px;
-    max-width: fit-content;
-    padding: 10px 30px;
-    /* margin-top: 100px; */
-    border: none;
-    border-radius: 100px;
-    font-size: 15px;
+    width: 100%;
+    max-width: 150px;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 1rem;
     font-weight: bold;
-    cursor: pointer;
+    color: black;
     background-color: hsl(153, 100%, 70%);
-    transition: background-color 0.3s ease;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    align-self: center;
 }
 
 .login-state-button:hover {
@@ -100,14 +152,49 @@ input {
 }
 
 span {
-    color: hsl(0, 0%, 0%);
+    color: hsl(0, 0%, 90%);
+    text-decoration: underline;
     font-weight: bold;
     cursor: pointer;
-    padding: 10px 5px;
-    border-radius: 10px;
-    transition: background-color 0.3s ease;
+    transition: color 0.3s ease;
 }
 
 span:hover {
-    background-color: hsl(164, 81%, 35%);
+    color: hsl(153, 100%, 70%);
+}
+
+/* Responsive Design */
+
+/* mobile view */
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    #homepage-logo {
+        max-width: 300px;
+    }
+
+    .all-forms {
+        padding: 15px;
+    }
+
+    input {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+}
+
+/* Extra small mobile view */
+@media (max-width: 480px) {
+    input {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+    }
+
+    .login-state-button {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
 }

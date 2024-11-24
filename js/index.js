@@ -1,21 +1,23 @@
-// Show the Create Account form
+// import { UserModel } from "./models/UserModel.js";
+
+/**Show the Create Account form*/
 const showCreateAccountForm = () => {
     document.getElementById("loginform").style.display = "none";
-    document.getElementById("createAccountForm").style.display = "block";
+    document.getElementById("createAccountForm").style.display = "flex";
 };
 
-// Show the Login form
+/**Show the Login form*/
 const showLoginForm = () => {
     document.getElementById("createAccountForm").style.display = "none";
-    document.getElementById("loginform").style.display = "block";
+    document.getElementById("loginform").style.display = "flex";
     document.getElementById("logoutSection").style.display = "none";
 };
 
-// Log In Functionality
+/**Log In Functionality*/
 const logIn = (event) => {
     event.preventDefault();
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
+    let username = document.getElementById("username").value.trim();
+    let password = document.getElementById("password").value.trim();
 
     const storedUsername = "orderbyrizz"// localStorage.getItem("username");
     const storedPassword = "anwica" // localStorage.getItem("password");
@@ -25,14 +27,16 @@ const logIn = (event) => {
         alert(`Welcome, ${username}!`);
         document.getElementById("loginform").style.display = "none";
         document.getElementById("createAccountForm").style.display = "none";
-        document.getElementById("logoutSection").style.display = "block";
-        // window.location.href = "fridge.html"
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
+        document.getElementById("logoutSection").style.display = "flex";
+        window.location.href = "fridge.html"
     } else {
         alert("Invalid username or password. Please try again.");
     }
 };
 
-// Create Account Functionality
+/**Create Account Functionality*/
 const createAccount = () => {
     const newUsername = document.getElementById("newUsername").value;
     const newPassword = document.getElementById("newPassword").value;
