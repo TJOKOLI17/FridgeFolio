@@ -29,16 +29,21 @@ def open_or_create_Items_table():
         )
     ''')
 
-    # cursor.execute('''
-    #     CREATE TRIGGER IF NOT EXISTS item_deletion
-    #     AFTER DELETE ON Items
-    #     BEGIN 
-    #         INSERT INTO deletedItems (id, name, amount, expDate)
-    #         VALUES (OLD.id, OLD.name, OLD.amount, OLD.expDate);
-    #         END;
-    # ''')
+    cursor.execute('''
+        SELECT name FROM sqlite_master WHERE type='trigger' AND name='item_deletion_validation';
+    ''')
+    trigger_exists_val = cursor.fetchone()
 
-    # Check if the trigger exists by querying the sqlite_master table
+    if not trigger_exists_val:
+        cursor.execute('''
+            CREATE TRIGGER item_deletion_validation
+            BEFORE DELETE ON Items
+            WHEN NOT (OLD.amount = 0 OR DATE(REPLACE(OLD.expDate, '/', '-')) < DATE('now'))
+            BEGIN
+                SELECT RAISE(ABORT, 'Item can only be deleted if the quantity is 0 or it is expired');
+            END;
+        ''')
+
     cursor.execute('''
         SELECT name FROM sqlite_master WHERE type='trigger' AND name='item_deletion';
     ''')
@@ -53,6 +58,9 @@ def open_or_create_Items_table():
                 INSERT INTO deletedItems (id, name, amount, expDate) VALUES (OLD.id, OLD.name, OLD.amount, OLD.expDate);
             END;
         ''')
+
+
+
     
     cursor.close()
     db.commit()
@@ -176,11 +184,25 @@ def update(item_id:int, item_amount:int) -> ItemModel | None:
     return new_item
     
 
-def delete(item_id:int):
+# def delete(item_id:int):
+#     open_or_create_Items_table()
+#     db = sqlite3.connect('Fridge.db')
+#     cursor = db.cursor()
+
+#     cursor.execute( f"DELETE FROM Items WHERE id = ?", (item_id,))
+#     db.commit()
+#     cursor.close(), db.close()
+
+def delete(item_id: int):
     open_or_create_Items_table()
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()
 
-    cursor.execute( f"DELETE FROM Items WHERE id = ?", (item_id,))
-    db.commit()
-    cursor.close(), db.close()
+    try:
+        cursor.execute(f"DELETE FROM Items WHERE id = ?", (item_id,))
+        db.commit()
+    except sqlite3.IntegrityError as e:
+        print(f"Deletion failed: {e}")
+    finally:
+        cursor.close()
+        db.close()
