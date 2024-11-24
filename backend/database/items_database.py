@@ -7,15 +7,10 @@ def open_or_create_fridge_tables():
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()
 
-    #Create table to store app users
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS Users(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL UNIQUE,
-            password TEXT NOT NULL,
-            CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
-        )
-    ''')
+    #Delete users table if accidentally created (during testing)
+    # cursor.execute('''
+    #     DROP TABLE IF EXISTS Users
+    # ''')
 
     #Create table to store fridge items
     cursor.execute('''
@@ -148,7 +143,7 @@ def read_deleted() -> list[ItemModel]:
     return items
 
 
-def read_by_id(item_id) -> list[ItemModel] | None:
+def read_by_id(item_id) -> ItemModel | None:
     """Fetch specfic entry from the database"""
     open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
