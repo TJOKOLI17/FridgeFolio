@@ -1,7 +1,7 @@
 # test_api.py
 import pytest
 from fastapi.testclient import TestClient
-from backend.api.items_router import app
+from backend.api.main import app
 from backend.database.database import open_or_create_fridge_tables
 
 client = TestClient(app)
