@@ -6,7 +6,7 @@ db = sqlite3.connect('Fridge.db')
 cursor = db.cursor()
 
 
-def open_or_create_Items_table():
+def open_or_create_fridge_tables():
     """Ensures Items table is always created."""
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()
@@ -29,16 +29,21 @@ def open_or_create_Items_table():
         )
     ''')
 
-    # cursor.execute('''
-    #     CREATE TRIGGER IF NOT EXISTS item_deletion
-    #     AFTER DELETE ON Items
-    #     BEGIN 
-    #         INSERT INTO deletedItems (id, name, amount, expDate)
-    #         VALUES (OLD.id, OLD.name, OLD.amount, OLD.expDate);
-    #         END;
-    # ''')
+    cursor.execute('''
+        SELECT name FROM sqlite_master WHERE type='trigger' AND name='item_deletion_validation';
+    ''')
+    trigger_exists_val = cursor.fetchone()
 
-    # Check if the trigger exists by querying the sqlite_master table
+    if not trigger_exists_val:
+        cursor.execute('''
+            CREATE TRIGGER item_deletion_validation
+            BEFORE DELETE ON Items
+            WHEN NOT (OLD.amount = 0 OR DATE(REPLACE(OLD.expDate, '/', '-')) < DATE('now'))
+            BEGIN
+                SELECT RAISE(ABORT, 'Item can only be deleted if the quantity is 0 or it is expired');
+            END;
+        ''')
+
     cursor.execute('''
         SELECT name FROM sqlite_master WHERE type='trigger' AND name='item_deletion';
     ''')
@@ -53,6 +58,9 @@ def open_or_create_Items_table():
                 INSERT INTO deletedItems (id, name, amount, expDate) VALUES (OLD.id, OLD.name, OLD.amount, OLD.expDate);
             END;
         ''')
+
+
+
     
     cursor.close()
     db.commit()
@@ -61,7 +69,7 @@ def open_or_create_Items_table():
 
 def create(item: ItemModel) -> ItemModel:
     """Create new item in the database"""
-    open_or_create_Items_table()
+    open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()
 
@@ -83,7 +91,7 @@ def create(item: ItemModel) -> ItemModel:
 
 def read() -> list[ItemModel]:
     """Fetch all entries from the database"""
-    open_or_create_Items_table()
+    open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()
     items: list[ItemModel] = []
@@ -110,7 +118,7 @@ def read() -> list[ItemModel]:
 
 def read_deleted() -> list[ItemModel]:
     """Fetch all deleted entries from the database"""
-    open_or_create_Items_table()
+    open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()
     items: list[ItemModel] = []
@@ -136,7 +144,7 @@ def read_deleted() -> list[ItemModel]:
 
 def read_by_id(item_id) -> list[ItemModel] | None:
     """Fetch specfic entry from the database"""
-    open_or_create_Items_table()
+    open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()
     
@@ -154,7 +162,7 @@ def read_by_id(item_id) -> list[ItemModel] | None:
 
 def update(item_id:int, item_amount:int) -> ItemModel | None:
     """Update item's amount in the database"""
-    open_or_create_Items_table()
+    open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()
 
@@ -176,11 +184,25 @@ def update(item_id:int, item_amount:int) -> ItemModel | None:
     return new_item
     
 
-def delete(item_id:int):
-    open_or_create_Items_table()
+# def delete(item_id:int):
+#     open_or_create_fridge_tables()
+#     db = sqlite3.connect('Fridge.db')
+#     cursor = db.cursor()
+
+#     cursor.execute( f"DELETE FROM Items WHERE id = ?", (item_id,))
+#     db.commit()
+#     cursor.close(), db.close()
+
+def delete(item_id: int):
+    open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()
 
-    cursor.execute( f"DELETE FROM Items WHERE id = ?", (item_id,))
-    db.commit()
-    cursor.close(), db.close()
+    try:
+        cursor.execute(f"DELETE FROM Items WHERE id = ?", (item_id,))
+        db.commit()
+    except sqlite3.IntegrityError as e:
+        print(f"Deletion failed: {e}")
+    finally:
+        cursor.close()
+        db.close()

@@ -8,7 +8,8 @@ const populateDeletedList = async () => {
         deletedList.replaceChildren();
         const deletedFridgeItems = await get_deleted_items()
         deletedFridgeItems.forEach((deletedFridgeItem) => {
-            toListItem(deletedList, deletedFridgeItem, true);
+            deletedList.append(toListItem(deletedList, deletedFridgeItem, true));
+            deletedList.appendChild(document.createElement('br'));
         })
     } catch (error) {
         console.error(error);
