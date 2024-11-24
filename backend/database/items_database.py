@@ -1,6 +1,5 @@
 import sqlite3
 from ..api.models.ItemModel import ItemModel
-from bcrypt import hashpw, gensalt, checkpw
 
 
 def open_or_create_fridge_tables():
@@ -191,15 +190,6 @@ def update(item_id:int, item_amount:int) -> ItemModel | None:
     return new_item
     
 
-# def delete(item_id:int):
-#     open_or_create_fridge_tables()
-#     db = sqlite3.connect('Fridge.db')
-#     cursor = db.cursor()
-
-#     cursor.execute( f"DELETE FROM Items WHERE id = ?", (item_id,))
-#     db.commit()
-#     cursor.close(), db.close()
-
 def delete(item_id: int):
     open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
@@ -213,5 +203,3 @@ def delete(item_id: int):
     finally:
         cursor.close()
         db.close()
-
-"""Users table CRUD Operation"""

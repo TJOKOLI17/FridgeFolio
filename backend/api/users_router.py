@@ -1,11 +1,11 @@
 from fastapi import APIRouter, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from .models.UserModel import UserModel
-from ..database.database import * 
+from ..database.items_database import * 
 
 router = APIRouter(
     prefix="/users",  # All routes will have this prefix
-    tags=["user"],    # Tag for documentation purposes
+    tags=["User"],    # Tag for documentation purposes
 )
 
 @router.get("/", response_model=list[UserModel])

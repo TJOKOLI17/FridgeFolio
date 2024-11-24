@@ -2,7 +2,7 @@
 import pytest
 from fastapi.testclient import TestClient
 from backend.api.main import app
-from backend.database.database import open_or_create_fridge_tables
+from backend.database.items_database import open_or_create_fridge_tables
 
 client = TestClient(app)
 

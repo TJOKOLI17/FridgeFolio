@@ -18,7 +18,7 @@ app.include_router(users_router)
 
 
 
-@app.get("/")
+@app.get("/", tags=["Root"])
 def root():
     return {"message": "Welcome to the FridgeFolio API"}
 

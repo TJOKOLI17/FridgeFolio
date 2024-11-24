@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from .models.ItemModel import ItemModel
-from ..database.database import * 
+from ..database.items_database import * 
 
 router = APIRouter(
     prefix="/items",  # All routes will have this prefix
