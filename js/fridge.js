@@ -4,12 +4,13 @@ import { toListItem } from "./services/sharedService.js";
 let boundHandler;
 
 const populateInventoryList = async () => {
+    const inventoryList = document.getElementById('inventory-list');
+    inventoryList.replaceChildren();
     try {
-        const inventoryList = document.getElementById('inventory-list');
-        inventoryList.replaceChildren();
         const fridgeItems = await getItems() // ItemModel[]
         fridgeItems.forEach((fridgeItem) => {
-            toListItem(inventoryList, fridgeItem, false);
+            inventoryList.append(toListItem(inventoryList, fridgeItem, false));
+            inventoryList.appendChild(document.createElement('br'));
         })
     } catch (error) {
         console.error(error);
@@ -47,7 +48,7 @@ const handleAmountInputUpdate = async (event, origValue, newValue, amountInput, 
         if (!isNaN(newValue) && newValue >= 0 && amountInput.value !== "") {
             // Only refresh the item if the new value is different from the original value
             if (origValue !== newValue) {
-                await updateItemAndRefreshInventoryList(newValue, item);  // Call your refresh function with the new value
+                await updateListItem(newValue, item);  // Call your refresh function with the new value
             } else {
             }
             backToSpan(amountInput, newValue, item);
@@ -74,10 +75,9 @@ const backToSpan = (amountInput, value, item) => {
 }
 
 
-const updateItemAndRefreshInventoryList = async (newValue, item) => {
+const updateListItem = async (newValue, item) => {
     const modifiedItem = new ItemModel(item[0], item[1], newValue, item[3])
     await updateItem(modifiedItem)
-    populateInventoryList()
 }
 
 populateInventoryList()

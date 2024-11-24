@@ -72,25 +72,36 @@ export const toListItem = (list, item, inTrash) => {
         listItem.appendChild(deleteBtn);
     }
 
-    list.appendChild(listItem);
-    list.appendChild(document.createElement('br'));
+    return listItem;
 }
 
 const deleteItemAndRefreshInventoryList = async (deletedItem) => {
-    await deleteItem(deletedItem)
+    // console.log(isExpired(deletedItem.expDate));
+    // if (deletedItem.amount > 0 || !isExpired(deletedItem.expDate)) {
+    //     window.alert("Item must be expired or have 0 quantity to be deleted.")
+    // } else {
+    //     await deleteItem(deletedItem)
+    // }
 
-    try {
-        const inventoryList = document.getElementById('inventory-list');
-        inventoryList.replaceChildren();
-        const fridgeItems = await getItems() // ItemModel[]
-        fridgeItems.forEach((fridgeItem) => {
-            toListItem(inventoryList, fridgeItem, false);
-        })
-    } catch (error) {
-        console.error(error);
+    if (deletedItem.amount === 0 || isExpired(deletedItem.expDate)) {
+        await deleteItem(deletedItem)
+        try {
+            const inventoryList = document.getElementById('inventory-list');
+            inventoryList.replaceChildren();
+            const fridgeItems = await getItems() // ItemModel[]
+            fridgeItems.forEach((fridgeItem) => {
+                toListItem(inventoryList, fridgeItem, false);
+            })
+        } catch (error) {
+            console.error(error);
 
 
+        }
+
+        return;
     }
+
+    window.alert("Item must be expired or have 0 quantity to be deleted.")
 }
 
 // document.addEventListener("click", (event) => {
