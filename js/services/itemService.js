@@ -61,7 +61,7 @@ export const addItem = async (newItem) => {
             currentItem.name,
             currentItem.amount,
             currentItem.expDate
-        )
+        );
     } catch (error) {
         throw new Error(error)
     }

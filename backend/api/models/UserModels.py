@@ -8,7 +8,7 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     """Attributes required for creating a new User."""
-    password: str = Field(..., min_length=8, title="Password", description="Password must be at least 8 characters long")
+    password: str # = Field(..., min_length=8, title="Password", description="Password must be at least 8 characters long")
 
 class UserResponse(UserBase):
     """Attributes returned when a User is retrieved."""

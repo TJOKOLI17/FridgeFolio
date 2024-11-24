@@ -68,7 +68,7 @@ def open_or_create_fridge_tables():
 
 
 """Items table CRUD Operation"""
-def create(item: ItemModel) -> ItemModel:
+def create_item(item: ItemModel) -> ItemModel:
     """Create new item in the database"""
     open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
@@ -90,7 +90,7 @@ def create(item: ItemModel) -> ItemModel:
     return new_item
 
 
-def read() -> list[ItemModel]:
+def read_item() -> list[ItemModel]:
     """Fetch all entries from the database"""
     open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
@@ -117,7 +117,7 @@ def read() -> list[ItemModel]:
     return items
 
 
-def read_deleted() -> list[ItemModel]:
+def read_deleted_items() -> list[ItemModel]:
     """Fetch all deleted entries from the database"""
     open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
@@ -143,7 +143,7 @@ def read_deleted() -> list[ItemModel]:
     return items
 
 
-def read_by_id(item_id) -> ItemModel | None:
+def read_item_by_id(item_id) -> ItemModel | None:
     """Fetch specfic entry from the database"""
     open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
@@ -161,7 +161,7 @@ def read_by_id(item_id) -> ItemModel | None:
     return found_item
 
 
-def update(item_id:int, item_amount:int) -> ItemModel | None:
+def update_item(item_id:int, item_amount:int) -> ItemModel | None:
     """Update item's amount in the database"""
     open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
@@ -185,7 +185,7 @@ def update(item_id:int, item_amount:int) -> ItemModel | None:
     return new_item
     
 
-def delete(item_id: int):
+def delete_item(item_id: int):
     open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()

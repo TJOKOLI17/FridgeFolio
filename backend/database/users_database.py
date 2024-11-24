@@ -11,16 +11,20 @@ db_commands: dict[str, str] = {
     "create_user_table": '''CREATE TABLE IF NOT EXISTS Users(
             uid INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT NOT NULL UNIQUE,
-            password TEXT NOT NULL,
+            password BLOB NOT NULL,
             CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
         )''',
     "get_all_users": '''SELECT * FROM Users''',
-    "get_user": '''SELECT * FROM Users WHERE uid = ?''',
+    "get_user_by_id": '''SELECT * FROM Users WHERE uid = ?''',
+    "get_user_by_username": '''SELECT * FROM Users WHERE username = ?''',
     "insert_new_user": '''INSERT INTO Users (username, password) VALUES (?, ?)''',
+    "delete_user": '''DELETE FROM Users WHERE uid = ?'''
 }
 
 
+
 def connect_to_db():
+    """Connects to the database"""
     conn = sqlite3.connect('Fridge.db')
     return conn
 
@@ -32,6 +36,7 @@ def open_or_create_user_table():
     #Create table to store app users
     try:
         cursor.execute(db_commands["create_user_table"])
+        db.commit()
     except sqlite3.OperationalError as CreateError:
         raise CreateError("Failed to create Users table")
     finally:
@@ -40,13 +45,14 @@ def open_or_create_user_table():
         if db:
             db.close()
 
-    db.commit()
 
 
 """Users table CRUD Operation"""
 
-def create(user: UserCreate) -> UserResponse | None:
+def create_user(user: UserCreate) -> UserResponse | None:
     """Create new user in the database"""
+    db = None
+    cursor = None
     try:
         open_or_create_user_table()
         db = connect_to_db()
@@ -58,10 +64,10 @@ def create(user: UserCreate) -> UserResponse | None:
 
         db.commit()
 
-        cursor.execute(db_commands["get_user"], (cursor.lastrowid,))
+        cursor.execute(db_commands["get_user_by_id"], (cursor.lastrowid,))
 
         entity = cursor.fetchone()
-        if entity:  # Ensure we got a result
+        if entity:  # Ensure we got a result (we should though as we know the user is created)
             new_user = UserResponse(
                 uid=entity[UID],
                 username=entity[USERNAME],
@@ -73,8 +79,8 @@ def create(user: UserCreate) -> UserResponse | None:
     except sqlite3.IntegrityError as AlreadyExistsError:
         raise ValueError("Username already exists") from AlreadyExistsError
 
-    except sqlite3.DatabaseError as db_error:
-        raise db_error(f"Database error: {str(db_error)}") from db_error
+    except sqlite3.DatabaseError as CreateError:
+        raise CreateError(f"Database error: {str(CreateError)}") from CreateError
 
     except Exception as e:
         # Log or raise unexpected errors
@@ -89,9 +95,11 @@ def create(user: UserCreate) -> UserResponse | None:
     return new_user
 
 
-def read() -> list[UserResponse]:
-    """Fetch all entries in the Users table"""
+def read_users() -> list[UserResponse]:
+    """Get all users in the Users table"""
     users: list[UserResponse] = []
+    db = None
+    cursor = None
     try:
         open_or_create_user_table()
         db = connect_to_db()
@@ -100,8 +108,8 @@ def read() -> list[UserResponse]:
         cursor.execute(db_commands["get_all_users"])
         entities = cursor.fetchall()
 
-        if not entities:
-            return []  # Explicit return if no users found
+        # if not entities:
+        #     return users  # Explicit return if no users found
 
         for entity in entities:
             user = UserResponse(
@@ -112,12 +120,10 @@ def read() -> list[UserResponse]:
             users.append(user)
 
     except sqlite3.OperationalError as GetError:
-        # Log the error and raise a custom message
         print(f"Error fetching users: {GetError}")
         raise Exception("Failed to get all users") from GetError
 
     finally:
-        # Ensure cursor and db are closed in the finally block
         if cursor:
             cursor.close()
         if db:
@@ -125,67 +131,133 @@ def read() -> list[UserResponse]:
         
     return users
 
+def read_user_by_password(user:UserCreate) -> UserResponse | None:
+    signed_in_user:UserResponse = None;
+    try:
+        open_or_create_user_table()
+        db = connect_to_db()
+        cursor = db.cursor()
+
+        cursor.execute(db_commands["get_user_by_username"], (user.username,))
+        entity = cursor.fetchone()
+        if entity:
+            stored_password:bytes = entity[PASSWORD]
+            if(is_correct_password((user.password), stored_password)):
+                signed_in_user = UserResponse(
+                uid=entity[UID], 
+                username=entity[USERNAME], 
+                CreatedAt=entity[CREATED_AT]
+            )
+    except sqlite3.Error as SignInError:
+        raise Exception("Failed to sign in") from SignInError
+    finally:
+        if cursor:
+            cursor.close()
+        if db:
+            db.close()
+
+    return signed_in_user
 
 
-def read_by_id(user_id) -> UserResponse | None:
-    """Fetch specfic entry from the database"""
-    open_or_create_user_table()
-    db = connect_to_db()
-    cursor = db.cursor()
-    
-    cursor.execute(db_commands["get_user"], (user_id,))
-    
-    entity = cursor.fetchone()
-    if(entity is None):
-        return None
-    found_user = UserResponse(uid=entity[UID], username=entity[USERNAME], CreatedAt=entity[CREATED_AT])
 
-    cursor.close()
-    db.close()
+def read_user_by_id(user_id) -> UserResponse | None:
+    """Fetch specfic user from the database"""
+    found_user:UserResponse = None
+    db = None
+    cursor = None
+    try:
+        open_or_create_user_table()
+        db = connect_to_db()
+        cursor = db.cursor()
+
+        cursor.execute(db_commands["get_user_by_id"], (user_id,))
+        entity = cursor.fetchone()
+
+        if entity:
+            found_user = UserResponse(
+                uid=entity[UID], 
+                username=entity[USERNAME], 
+                CreatedAt=entity[CREATED_AT]
+            )
+
+    except sqlite3.OperationalError as GetError:
+        print(f"Error fetching users: {GetError}")
+        raise Exception("Failed to get user") from GetError
+
+    finally:
+        if cursor:
+            cursor.close()
+        if db:
+            db.close()
+        
     return found_user
 
 
-def update(user_id:int, user_password:int) -> UserResponse | None:
-    """Update user's password in the database"""
-    open_or_create_user_table()
-    db = connect_to_db()
-    cursor = db.cursor()
+# def update_user(user_id:int, user_password:int) -> UserResponse | None:
+#     """Update user's password in the database"""
+#     open_or_create_user_table()
+#     db = connect_to_db()
+#     cursor = db.cursor()
 
-    change_password_query:str = "UPDATE Users SET password = ? WHERE uid = ?;"
+#     change_password_query:str = "UPDATE Users SET password = ? WHERE uid = ?;"
 
-    cursor.execute(change_password_query, (user_password, user_id))
-    db.commit()
+#     cursor.execute(change_password_query, (user_password, user_id))
+#     db.commit()
 
-    cursor.execute("SELECT * FROM Users WHERE uid = ?", (user_id,))
+#     cursor.execute("SELECT * FROM Users WHERE uid = ?", (user_id,))
 
-    entity = cursor.fetchone()
-    if entity is None:
-        return None
-    new_user = UserResponse(uid=entity[UID], username=entity[USERNAME], CreatedAt=entity[CREATED_AT])
+#     entity = cursor.fetchone()
+#     if entity is None:
+#         return None
+#     new_user = UserResponse(uid=entity[UID], username=entity[USERNAME], CreatedAt=entity[CREATED_AT])
 
-    cursor.close()
-    db.close()
+#     cursor.close()
+#     db.close()
 
-    return new_user
+#     return new_user
     
 
-def delete(user_id: int):
-    open_or_create_user_table()
-    db = connect_to_db()
-    cursor = db.cursor()
+import sqlite3
+
+def delete_user(user_id: int):
+    db = None
+    cursor = None
 
     try:
-        cursor.execute(f"DELETE FROM Users WHERE uid = ?", (user_id,))
+        open_or_create_user_table()
+        db = connect_to_db()
+        cursor = db.cursor()
+        cursor.execute(db_commands["delete_user"], (user_id,))
         db.commit()
-    except:
-        print(f"Error occured when deleting user")
+        if cursor.rowcount == 0:
+            raise ValueError(f"No user found with ID {user_id}")  # Optional: check if a user was deleted
+    except sqlite3.OperationalError as DeletionError:
+        db.rollback()  # Rollback in case of an error
+        print(f"Error occurred when deleting user with ID {user_id}: {DeletionError}")
+        raise  DeletionError("Failed to delete user") from DeletionError
     finally:
         cursor.close()
         db.close()
 
+
 """Helper methods"""
-def hash_password(password: str):
+from bcrypt import hashpw, gensalt, checkpw
+
+def hash_password(password: str) -> bytes:
     """Encrypt user's password"""
-    salt = gensalt()
-    hashed_password = hashpw(password.encode('utf-8'), salt)
-    return hashed_password.decode('utf-8')  # Store as a string in the DB
+    salt = gensalt()  # Generate a salt
+    hashed_password = hashpw(password.encode('utf-8'), salt)  # Hash the password with the salt
+    return hashed_password  # Return as bytes (bcrypt returns binary data, no need to decode)
+
+def is_correct_password(attempted_password: str, actual_password: bytes) -> bool:
+    """Check if the attempted password matches the actual password"""
+    return checkpw(attempted_password.encode('utf-8'), actual_password)  # Check using bcrypt's checkpw
+
+
+# def hash_password(password: str):
+#     """Encrypt user's password"""
+#     salt = gensalt()
+#     hashed_password = hashpw(password.encode('utf-8'), salt)
+#     return hashed_password.decode('utf-8')  # Store as a string in the DB
+# def is_correct_password(attempted_password:str, actual_password:str) -> bool:
+#     return checkpw(attempted_password.encode(), actual_password)

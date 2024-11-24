@@ -1,5 +1,9 @@
 // import { UserModel } from "./models/UserModel.js";
 
+import { UserCreate, UserResponse } from "./models/UserModels.js";
+import { getUserByPassword, getUserById } from "./services/UserService.js";
+
+
 /**Show the Create Account form*/
 const showCreateAccountForm = () => {
     document.getElementById("loginform").style.display = "none";
@@ -14,27 +18,46 @@ const showLoginForm = () => {
 };
 
 /**Log In Functionality*/
-const logIn = (event) => {
-    event.preventDefault();
-    let username = document.getElementById("username").value.trim();
-    let password = document.getElementById("password").value.trim();
+// const logIn = (event) => {
+//     event.preventDefault();
+//     let username = document.getElementById("username").value.trim();
+//     let password = document.getElementById("password").value.trim();
 
-    const storedUsername = "orderbyrizz"// localStorage.getItem("username");
-    const storedPassword = "anwica" // localStorage.getItem("password");
+//     // const storedUsername = "orderbyrizz"// localStorage.getItem("username");
+//     // const storedPassword = "anwica" // localStorage.getItem("password");
 
 
-    if (storedUsername === username && storedPassword === password) {
-        alert(`Welcome, ${username}!`);
-        document.getElementById("loginform").style.display = "none";
-        document.getElementById("createAccountForm").style.display = "none";
-        document.getElementById("username").value = "";
-        document.getElementById("password").value = "";
-        document.getElementById("logoutSection").style.display = "flex";
+//     if (storedUsername === username && storedPassword === password) {
+//         alert(`Welcome, ${username}!`);
+//         document.getElementById("loginform").style.display = "none";
+//         document.getElementById("createAccountForm").style.display = "none";
+//         document.getElementById("username").value = "";
+//         document.getElementById("password").value = "";
+//         document.getElementById("logoutSection").style.display = "flex";
+//         window.location.href = "fridge.html"
+//     } else {
+//         alert("Invalid username or password. Please try again.");
+//     }
+// };
+
+const logIn = async (event) => {
+    event.preventDefault()
+    try {
+        let username = document.getElementById("username").value.trim();
+        let password = document.getElementById("password").value.trim();
+        const user = await getUserByPassword(new UserCreate(username, password))
+        localStorage.setItem("username", user.username)
+        localStorage.setItem("uid", String(user.uid))
         window.location.href = "fridge.html"
-    } else {
-        alert("Invalid username or password. Please try again.");
+    } catch (error) {
+        window.alert(error.message)
     }
-};
+
+    // localStorage.removeItem("orderbyrizz")
+    // localStorage.removeItem("anwica")
+
+
+}
 
 /**Create Account Functionality*/
 const createAccount = () => {
@@ -60,8 +83,7 @@ const createAccount = () => {
     showLoginForm();
 };
 
-// Log Out Functionality
-const logOut = () => {
-    alert("You have been logged out.");
-    showLoginForm();
-};
+window.logIn = logIn
+window.showLoginForm = showLoginForm
+window.createAccount = createAccount
+window.showCreateAccountForm = showCreateAccountForm
