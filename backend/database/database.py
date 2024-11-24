@@ -1,15 +1,24 @@
 import sqlite3
-# from fastapi import Depends
-from ..api.model import ItemModel
-db = sqlite3.connect('Fridge.db')
-# session = Depends(db)
-cursor = db.cursor()
+from ..api.models.ItemModel import ItemModel
+from bcrypt import hashpw, gensalt, checkpw
 
 
 def open_or_create_fridge_tables():
     """Ensures Items table is always created."""
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()
+
+    #Create table to store app users
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS Users(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL,
+            CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+
+    #Create table to store fridge items
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS Items(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -58,15 +67,13 @@ def open_or_create_fridge_tables():
                 INSERT INTO deletedItems (id, name, amount, expDate) VALUES (OLD.id, OLD.name, OLD.amount, OLD.expDate);
             END;
         ''')
-
-
-
     
     cursor.close()
     db.commit()
     db.close()
 
 
+"""Items table CRUD Operation"""
 def create(item: ItemModel) -> ItemModel:
     """Create new item in the database"""
     open_or_create_fridge_tables()
@@ -206,3 +213,5 @@ def delete(item_id: int):
     finally:
         cursor.close()
         db.close()
+
+"""Users table CRUD Operation"""
