@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FridgeFolio</title>
     <link rel="icon" href="/img/fridge-logo.png" type="image/png">
-    <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/navbar.css" />
+    <link rel="stylesheet" href="css/styles.css" />
 </head>
 
 <body>
@@ -23,44 +23,52 @@
 
     <!-- Login Form -->
     <main>
-        <form id="loginform">
-            <h2>Login</h2>
-            <label for="username">Username:</label><br>
-            <input type="text" id="username" name="username" placeholder="Enter your username" required><br><br>
+        <div id="homepage-logo-container">
+            <img id="homepage-logo" src="/img/homepage-fridge(1).png" alt="fridge">
+        </div>
+        <div class="login-area">
+            <form id="loginform" class="all-forms">
+                <h2>Login</h2>
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required><br><br>
 
-            <label for="password">Password:</label><br>
-            <input type="password" id="password" name="password" placeholder="Enter your password" required><br><br>
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required><br><br>
 
-            <button type="submit" onclick="logIn(event)">Login</button>
-            <button type="button" onclick="showCreateAccountForm()">Create Account</button>
-        </form>
+                <div class="account-buttons">
+                    <button class="login-state-button" type="submit" onclick="logIn(event)">Login</button>
+                    <p>Don't have an account? <span onclick="showCreateAccountForm()">Sign Up</span></p>
+                </div>
+            </form>
 
-        <!-- Create Account Form -->
-        <form id="createAccountForm" style="display: none;">
-            <h2>Create Account</h2>
-            <label for="newUsername">Username:</label><br>
-            <input type="text" id="newUsername" name="newUsername" placeholder="Enter your new username"
-                required><br><br>
+            <!-- Create Account Form -->
+            <form id="createAccountForm" class="all-forms" style="display: none;">
+                <h2>Create Account</h2>
+                <label for="newUsername">Username:</label><br>
+                <input type="text" id="newUsername" name="newUsername" placeholder="Enter your new username"
+                    required><br><br>
 
-            <label for="newPassword">Password:</label><br>
-            <input type="password" id="newPassword" name="newPassword" placeholder="Enter your new password"
-                required><br><br>
+                <label for="newPassword">Password:</label><br>
+                <input type="password" id="newPassword" name="newPassword" placeholder="Enter your new password"
+                    required><br><br>
 
-            <label for="confirmPassword">Confirm Password:</label><br>
-            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your new password"
-                required><br><br>
+                <label for="confirmPassword">Confirm Password:</label><br>
+                <input type="password" id="confirmPassword" name="confirmPassword"
+                    placeholder="Confirm your new password" required><br><br>
 
-            <button type="button" onclick="createAccount()">Create Account</button>
-            <button type="button" onclick="showLoginForm()">Cancel</button>
-        </form>
+                <div class="account-buttons">
+                    <button class="login-state-button" type="button" onclick="createAccount()">Create Account</button>
+                    <p>Already have an account? <span onclick="showLoginForm()">Sign In</span></p>
+                </div>
+            </form>
 
-        <!-- Logout Button -->
-        <form id="logoutSection" style="display: none;">
-            <h2>Welcome to FridgeFolio!</h2>
-            <p>You are now logged in.</p>
-            <button onclick="logOut()">Logout</button>
-        </form>
-
+            <!-- Logout Button -->
+            <form id="logoutSection" class="all-forms" style="display: none;">
+                <h2>Welcome to FridgeFolio!</h2>
+                <p>You are now logged in.</p>
+                <button class="login-state-button" type="button" onclick="logOut()">Logout</button>
+            </form>
+        </div>
     </main>
 
     <script src="js/index.js"></script>

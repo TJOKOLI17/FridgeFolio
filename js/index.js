@@ -14,17 +14,19 @@ const showLoginForm = () => {
 // Log In Functionality
 const logIn = (event) => {
     event.preventDefault();
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-    const storedUsername = localStorage.getItem("username");
-    const storedPassword = localStorage.getItem("password");
+    const storedUsername = "orderbyrizz"// localStorage.getItem("username");
+    const storedPassword = "anwica" // localStorage.getItem("password");
+
 
     if (storedUsername === username && storedPassword === password) {
         alert(`Welcome, ${username}!`);
         document.getElementById("loginform").style.display = "none";
         document.getElementById("createAccountForm").style.display = "none";
         document.getElementById("logoutSection").style.display = "block";
+        // window.location.href = "fridge.html"
     } else {
         alert("Invalid username or password. Please try again.");
     }
