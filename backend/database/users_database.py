@@ -35,8 +35,10 @@ def open_or_create_user_table():
     except sqlite3.OperationalError as CreateError:
         raise CreateError("Failed to create Users table")
     finally:
-        cursor.close()
-        db.close()
+        if cursor:
+            cursor.close()
+        if db:
+            db.close()
 
     db.commit()
 
@@ -79,39 +81,50 @@ def create(user: UserCreate) -> UserResponse | None:
         print(f"Unexpected error: {str(e)}")
         raise e   
     finally:
-        cursor.close()
-        db.close()
+        if cursor:
+            cursor.close()
+        if db:
+            db.close()
 
     return new_user
 
 
 def read() -> list[UserResponse]:
     """Fetch all entries in the Users table"""
+    users: list[UserResponse] = []
     try:
         open_or_create_user_table()
         db = connect_to_db()
         cursor = db.cursor()
-        users: list[UserResponse] = []
 
         cursor.execute(db_commands["get_all_users"])
         entities = cursor.fetchall()
 
         if not entities:
-            return []
+            return []  # Explicit return if no users found
 
         for entity in entities:
             user = UserResponse(
                         uid=entity[UID], 
                         username=entity[USERNAME], 
-                        CreatedAt=entity[CREATED_AT]     
+                        CreatedAt=entity[CREATED_AT]
                     )
             users.append(user)
+
     except sqlite3.OperationalError as GetError:
-        raise GetError("Failed to get all users")
+        # Log the error and raise a custom message
+        print(f"Error fetching users: {GetError}")
+        raise Exception("Failed to get all users") from GetError
+
     finally:
-        cursor.close()
-        db.close()
+        # Ensure cursor and db are closed in the finally block
+        if cursor:
+            cursor.close()
+        if db:
+            db.close()
+        
     return users
+
 
 
 def read_by_id(user_id) -> UserResponse | None:
