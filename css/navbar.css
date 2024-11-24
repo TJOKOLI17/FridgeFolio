@@ -3,19 +3,18 @@ nav {
     align-items: center;
     padding-top: 10px;
     padding-bottom: 10px;
+    width: 100%;
     background-color: hsl(207, 55%, 77%);
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
 
-img {
-    border-radius: 200px;
-}
 
 .logo {
     width: 60px;
     cursor: pointer;
     margin-left: 5px;
     padding: 5px;
+    border-radius: 200px;
     transition: filter 0.3s ease;
 }
 
@@ -33,12 +32,15 @@ img {
     text-decoration: None;
     color: black;
     border-radius: 5px;
-    padding: 30px;
+    padding: 10px 10px 10px 10px;
+    text-align: center;
+    /* background-color: blue; */
+    margin-right: 10px;
     transition: background-color 0.3s ease;
 }
 
 .desktop-menu {
-    padding-right: 10px;
+    padding-right: 5px;
     margin-left: auto;
 }
 
