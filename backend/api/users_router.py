@@ -8,7 +8,7 @@ router = APIRouter(
     tags=["User"],    # Tag for documentation purposes
 )
 
-@router.get("/", response_model=list[UserResponse])
+@router.get("/", response_model=list[UserModel])
 async def get_users():
     return read()
 
