@@ -6,7 +6,7 @@ db = sqlite3.connect('Fridge.db')
 cursor = db.cursor()
 
 
-def open_or_create_Items_table():
+def open_or_create_fridge_tables():
     """Ensures Items table is always created."""
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()
@@ -69,7 +69,7 @@ def open_or_create_Items_table():
 
 def create(item: ItemModel) -> ItemModel:
     """Create new item in the database"""
-    open_or_create_Items_table()
+    open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()
 
@@ -91,7 +91,7 @@ def create(item: ItemModel) -> ItemModel:
 
 def read() -> list[ItemModel]:
     """Fetch all entries from the database"""
-    open_or_create_Items_table()
+    open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()
     items: list[ItemModel] = []
@@ -118,7 +118,7 @@ def read() -> list[ItemModel]:
 
 def read_deleted() -> list[ItemModel]:
     """Fetch all deleted entries from the database"""
-    open_or_create_Items_table()
+    open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()
     items: list[ItemModel] = []
@@ -144,7 +144,7 @@ def read_deleted() -> list[ItemModel]:
 
 def read_by_id(item_id) -> list[ItemModel] | None:
     """Fetch specfic entry from the database"""
-    open_or_create_Items_table()
+    open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()
     
@@ -162,7 +162,7 @@ def read_by_id(item_id) -> list[ItemModel] | None:
 
 def update(item_id:int, item_amount:int) -> ItemModel | None:
     """Update item's amount in the database"""
-    open_or_create_Items_table()
+    open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()
 
@@ -185,7 +185,7 @@ def update(item_id:int, item_amount:int) -> ItemModel | None:
     
 
 # def delete(item_id:int):
-#     open_or_create_Items_table()
+#     open_or_create_fridge_tables()
 #     db = sqlite3.connect('Fridge.db')
 #     cursor = db.cursor()
 
@@ -194,7 +194,7 @@ def update(item_id:int, item_amount:int) -> ItemModel | None:
 #     cursor.close(), db.close()
 
 def delete(item_id: int):
-    open_or_create_Items_table()
+    open_or_create_fridge_tables()
     db = sqlite3.connect('Fridge.db')
     cursor = db.cursor()
 
