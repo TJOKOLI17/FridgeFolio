@@ -104,6 +104,26 @@ const deleteItemAndRefreshInventoryList = async (deletedItem) => {
     window.alert("Item must be expired or have 0 quantity to be deleted.")
 }
 
+/**
+ * Prevent user from going back to website if they logged out.
+ */
+export const redirectToHome = () => {
+    if (!isLoggedIn()) {
+        window.location.href = "index.html"
+    }
+}
+
+/**
+ * Checks if user is logged in or not.
+ * @returns 
+ */
+const isLoggedIn = () => {
+    if (localStorage.getItem("username") != null && localStorage.getItem("uid") != null) {
+        return true
+    }
+
+    return false
+}
 
 // document.addEventListener("click", (event) => {
 //     const newValue = Number(String(amountInput.value));  // Convert the input value to a number

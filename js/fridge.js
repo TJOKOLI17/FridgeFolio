@@ -1,6 +1,6 @@
 import { ItemModel } from "./models/ItemModel.js";
 import { getItems, updateItem } from "./services/itemService.js";
-import { toListItem } from "./services/sharedService.js";
+import { toListItem, redirectToHome } from "./services/sharedService.js";
 let boundHandler;
 
 const populateInventoryList = async () => {
@@ -80,4 +80,10 @@ const updateListItem = async (newValue, item) => {
     await updateItem(modifiedItem)
 }
 
+
+
 populateInventoryList()
+redirectToHome()
+
+// console.log(localStorage.getItem("username"));
+// console.log(localStorage.getItem("uid"));

@@ -1,6 +1,6 @@
 import { ItemModel } from "./models/ItemModel.js";
 import { get_deleted_items } from "./services/itemService.js";
-import { isExpired, toListItem } from "./services/sharedService.js";
+import { toListItem, redirectToHome } from "./services/sharedService.js";
 
 const populateDeletedList = async () => {
     try {
@@ -17,3 +17,4 @@ const populateDeletedList = async () => {
 }
 
 populateDeletedList()
+redirectToHome()

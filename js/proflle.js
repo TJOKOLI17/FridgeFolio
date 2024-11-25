@@ -1,3 +1,5 @@
+import { redirectToHome } from "./services/sharedService.js";
+
 // Log Out Functionality
 const logOut = () => {
     // user = await getUserById(user_id);
@@ -5,3 +7,7 @@ const logOut = () => {
     localStorage.removeItem("uid")
     window.location.href = "index.html"
 };
+
+window.logOut = logOut
+
+redirectToHome()
