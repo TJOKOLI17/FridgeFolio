@@ -168,6 +168,7 @@ span:hover {
 /* mobile view */
 @media (max-width: 768px) {
     main {
+        width: fit-content;
         flex-direction: column;
         gap: 30px;
     }
@@ -188,6 +189,10 @@ span:hover {
 
 /* Extra small mobile view */
 @media (max-width: 480px) {
+    main {
+        width: fit-content;
+    }
+
     input {
         font-size: 0.8rem;
         padding: 6px 10px;

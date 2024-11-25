@@ -45,6 +45,12 @@ const logIn = async () => {
     try {
         let username = document.getElementById("username").value.trim();
         let password = document.getElementById("password").value.trim();
+
+        if (username === "" || password === "") {
+            window.alert("Please fill out all fields.")
+            return;
+        }
+
         const user = await getUserByPassword(new UserCreate(username, password))
 
         localStorage.setItem("username", user.username)
@@ -69,6 +75,10 @@ const createAccount = async () => {
         // console.log(confirmPassword);
         // console.log();
 
+        if (username === "" || password === "" || confirmPassword === "") {
+            window.alert("Please fill out all fields.")
+            return;
+        }
 
         if (newPassword !== confirmPassword) {
             window.alert("Passwords do not match");
