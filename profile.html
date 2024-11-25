@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FridgeFolio</title>
     <link rel="icon" href="/img/fridge-logo.png" type="image/png">
-    <link rel="stylesheet" href="css/fridge.css" />
     <link rel="stylesheet" href="css/navbar.css" />
+    <link rel="stylesheet" href="css/styles.css" />
 </head>
 
 <body>
@@ -16,23 +16,21 @@
         <h2 id="website-title">FridgeFolio</h2>
         <div class="desktop-menu">
             <a href="inventory.html" class="menu-item">Add Item</a>
-            <a href="trash.html" class="menu-item">Trash</a>
+            <a href="fridge.html" class="menu-item">Fridge</a>
+            <a href="deleted.html" class="menu-item">Trash Can</a>
         </div>
     </nav>
 
-    <h2 id="item-list-title">What's In My Fridge:</h2>
+    <main>
+        <!-- Logout Button -->
+        <form id="logoutSection" class="all-forms">
+            <h2>Come Back Soon!</h2>
+            <p style="margin-bottom: 30px">You are currently logged in.</p>
+            <button class="login-state-button" type="button" onclick="logOut()">Logout</button>
+        </form>
+    </main>
 
-    <ul id="color-key">
-        <li class="color-key-item">Expires Today: <img class="color-block" src="/img/last-day.png"
-                alt="yellow circle" />
-        </li>
-        <li class="color-key-item">Expired: <img class="color-block" src="/img/expired.png" alt="red circle" />
-        </li>
-    </ul>
-
-    <ul id="inventory-list"></ul>
-
-    <script type="module" src="/js/fridge.js"></script>
+    <script src="js/proflle.js"></script>
 </body>
 
 </html>

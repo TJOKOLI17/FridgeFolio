@@ -104,13 +104,6 @@ const deleteItemAndRefreshInventoryList = async (deletedItem) => {
     window.alert("Item must be expired or have 0 quantity to be deleted.")
 }
 
-// Log Out Functionality
-// const logOut = async () => {
-//     // user = await getUserById(user_id);
-//     localStorage.removeItem("username")
-//     localStorage.removeItem("uid")
-//     window.location.href = "index.html"
-// };
 
 // document.addEventListener("click", (event) => {
 //     const newValue = Number(String(amountInput.value));  // Convert the input value to a number

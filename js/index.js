@@ -87,9 +87,3 @@ window.logIn = logIn
 window.showLoginForm = showLoginForm
 window.createAccount = createAccount
 window.showCreateAccountForm = showCreateAccountForm
-
-// console.log(localStorage.getItem("username"))
-// console.log(localStorage.getItem("uid"))
-
-// localStorage.removeItem("username")
-// localStorage.removeItem("uid")
