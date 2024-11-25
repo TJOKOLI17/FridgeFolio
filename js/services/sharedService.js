@@ -105,13 +105,12 @@ const deleteItemAndRefreshInventoryList = async (deletedItem) => {
 }
 
 // Log Out Functionality
-const logOut = async (user) => {
-    // user = await getUserById(user_id);
-    localStorage.removeItem(user.username)
-    localStorage.removeItem(String(user.uid))
-    window.location.href = "index.html"
-    showLoginForm();
-};
+// const logOut = async () => {
+//     // user = await getUserById(user_id);
+//     localStorage.removeItem("username")
+//     localStorage.removeItem("uid")
+//     window.location.href = "index.html"
+// };
 
 // document.addEventListener("click", (event) => {
 //     const newValue = Number(String(amountInput.value));  // Convert the input value to a number

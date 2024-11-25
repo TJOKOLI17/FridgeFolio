@@ -1,7 +1,7 @@
 // import { UserModel } from "./models/UserModel.js";
 
 import { UserCreate, UserResponse } from "./models/UserModels.js";
-import { getUserByPassword, getUserById } from "./services/UserService.js";
+import { getUserByPassword, getUserById, createNewUser } from "./services/UserService.js";
 
 
 /**Show the Create Account form*/
@@ -40,12 +40,13 @@ const showLoginForm = () => {
 //     }
 // };
 
-const logIn = async (event) => {
-    event.preventDefault()
+/**Log in account functionality*/
+const logIn = async () => {
     try {
         let username = document.getElementById("username").value.trim();
         let password = document.getElementById("password").value.trim();
         const user = await getUserByPassword(new UserCreate(username, password))
+
         localStorage.setItem("username", user.username)
         localStorage.setItem("uid", String(user.uid))
         window.location.href = "fridge.html"
@@ -53,37 +54,42 @@ const logIn = async (event) => {
         window.alert(error.message)
     }
 
-    // localStorage.removeItem("orderbyrizz")
-    // localStorage.removeItem("anwica")
-
 
 }
 
-/**Create Account Functionality*/
-const createAccount = () => {
-    const newUsername = document.getElementById("newUsername").value;
-    const newPassword = document.getElementById("newPassword").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
+/**Create account functionality*/
+const createAccount = async () => {
+    try {
+        const newUsername = document.getElementById("newUsername").value.trim();
+        const newPassword = document.getElementById("newPassword").value.trim();
+        const confirmPassword = document.getElementById("confirmPassword").value.trim();
 
-    if (!newUsername || !newPassword || !confirmPassword) {
-        alert("Please fill in all fields.");
-        return;
+        // console.log(newPassword);
+        // console.log(confirmPassword);
+        // console.log();
+
+
+        if (newPassword !== confirmPassword) {
+            window.alert("Passwords do not match");
+            return;
+        }
+
+        const newUser = await createNewUser(new UserCreate(newUsername, newPassword))
+        localStorage.setItem("username", newUser.username)
+        localStorage.setItem("uid", String(newUser.uid))
+        window.location.href = "fridge.html"
+    } catch (error) {
+        window.alert(error.message)
     }
-
-    if (newPassword !== confirmPassword) {
-        alert("Passwords do not match. Please try again.");
-        return;
-    }
-
-    // Store the new user details in localStorage
-    localStorage.setItem("username", newUsername);
-    localStorage.setItem("password", newPassword);
-
-    alert("Account created successfully! Please log in.");
-    showLoginForm();
 };
 
 window.logIn = logIn
 window.showLoginForm = showLoginForm
 window.createAccount = createAccount
 window.showCreateAccountForm = showCreateAccountForm
+
+// console.log(localStorage.getItem("username"))
+// console.log(localStorage.getItem("uid"))
+
+// localStorage.removeItem("username")
+// localStorage.removeItem("uid")

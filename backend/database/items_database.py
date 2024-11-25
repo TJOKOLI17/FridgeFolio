@@ -4,7 +4,7 @@ from ..api.models.ItemModel import ItemModel
 
 def open_or_create_fridge_tables():
     """Ensures Items table is always created."""
-    db = sqlite3.connect('Fridge.db')
+    db = connect_to_db()
     cursor = db.cursor()
 
     #Delete users table if accidentally created (during testing)
@@ -66,12 +66,17 @@ def open_or_create_fridge_tables():
     db.commit()
     db.close()
 
+def connect_to_db():
+    """Connects to the database."""
+    conn = sqlite3.connect('Fridge.db')
+    return conn
+
 
 """Items table CRUD Operation"""
 def create_item(item: ItemModel) -> ItemModel:
     """Create new item in the database"""
     open_or_create_fridge_tables()
-    db = sqlite3.connect('Fridge.db')
+    db = connect_to_db()
     cursor = db.cursor()
 
     cursor.execute( 
@@ -93,7 +98,7 @@ def create_item(item: ItemModel) -> ItemModel:
 def read_item() -> list[ItemModel]:
     """Fetch all entries from the database"""
     open_or_create_fridge_tables()
-    db = sqlite3.connect('Fridge.db')
+    db = connect_to_db()
     cursor = db.cursor()
     items: list[ItemModel] = []
 
@@ -120,7 +125,7 @@ def read_item() -> list[ItemModel]:
 def read_deleted_items() -> list[ItemModel]:
     """Fetch all deleted entries from the database"""
     open_or_create_fridge_tables()
-    db = sqlite3.connect('Fridge.db')
+    db = connect_to_db()
     cursor = db.cursor()
     items: list[ItemModel] = []
 
@@ -146,7 +151,7 @@ def read_deleted_items() -> list[ItemModel]:
 def read_item_by_id(item_id) -> ItemModel | None:
     """Fetch specfic entry from the database"""
     open_or_create_fridge_tables()
-    db = sqlite3.connect('Fridge.db')
+    db = connect_to_db()
     cursor = db.cursor()
     
     cursor.execute(f"SELECT * FROM Items WHERE id = ?", (item_id,))
@@ -164,7 +169,7 @@ def read_item_by_id(item_id) -> ItemModel | None:
 def update_item(item_id:int, item_amount:int) -> ItemModel | None:
     """Update item's amount in the database"""
     open_or_create_fridge_tables()
-    db = sqlite3.connect('Fridge.db')
+    db = connect_to_db()
     cursor = db.cursor()
 
     change_amount_query:str = "UPDATE Items SET amount = ? WHERE id = ?;"
@@ -187,7 +192,7 @@ def update_item(item_id:int, item_amount:int) -> ItemModel | None:
 
 def delete_item(item_id: int):
     open_or_create_fridge_tables()
-    db = sqlite3.connect('Fridge.db')
+    db = connect_to_db()
     cursor = db.cursor()
 
     try:

@@ -36,7 +36,7 @@
                 <input type="password" id="password" name="password" placeholder="Enter your password" required><br><br>
 
                 <div class="account-buttons">
-                    <button class="login-state-button" type="submit" onclick="logIn(event)">Login</button>
+                    <button class="login-state-button" type="button" onclick="logIn()">Login</button>
                     <p>Don't have an account? <span onclick="showCreateAccountForm()">Sign Up</span></p>
                 </div>
             </form>
@@ -57,7 +57,8 @@
                     placeholder="Confirm your new password" required><br><br>
 
                 <div class="account-buttons">
-                    <button class="login-state-button" type="button" onclick="createAccount()">Create Account</button>
+                    <button class="login-state-button" type="button" onclick="createAccount()">Create
+                        Account</button>
                     <p>Already have an account? <span onclick="showLoginForm()">Sign In</span></p>
                 </div>
             </form>

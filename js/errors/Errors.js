@@ -5,3 +5,10 @@ export class SignInError extends Error {
     }
 }
 
+export class SignUpError extends Error {
+    constructor(message) {
+        super(message)
+        this.name = "SignUpError"
+    }
+}
+

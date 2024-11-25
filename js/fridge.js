@@ -81,7 +81,9 @@ const updateListItem = async (newValue, item) => {
 }
 
 populateInventoryList()
-console.log(localStorage.getItem("uid"))
+
+// console.log(localStorage.getItem("username"))
+// console.log(localStorage.getItem("uid"))
 
 // localStorage.removeItem("username")
 // localStorage.removeItem("uid")

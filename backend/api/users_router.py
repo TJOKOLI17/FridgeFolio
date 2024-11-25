@@ -17,7 +17,8 @@ def get_user_by_password(username:str, password:str):
     user = UserCreate(username=username, password=password)
     sign_in_attempt:UserResponse = read_user_by_password(user)
     if(sign_in_attempt is None):
-        raise HTTPException(status_code=404, detail={"username": user.username, "message": "Incorrect username or password"})
+        raise HTTPException(status_code=404, detail="Incorrect username or password")
+        # return {"found": None}
     print(sign_in_attempt)
     return sign_in_attempt
         
@@ -61,7 +62,7 @@ def create_new_user(user: UserCreate):
 def delete_existing_user(user_id: int): 
     user = read_user_by_id(user_id)
     if user is None:
-        raise HTTPException(status_code=404, detail={"id": user_id, "message": "user not found"})
+        raise HTTPException(status_code=404, detail="user not found")
     delete_user(user_id)
 
 # create_new_user(UserCreate(username="testuser", password="testuser123"))
