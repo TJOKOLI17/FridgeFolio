@@ -1,14 +1,14 @@
 # test_api.py
 import pytest
 from fastapi.testclient import TestClient
-from backend.api.api import app
-from backend.database.database import open_or_create_Items_table
+from backend.api.main import app
+from backend.database.items_database import open_or_create_fridge_tables
 
 client = TestClient(app)
 
 @pytest.fixture(scope="module", autouse=True)
 def setup_database():
-    open_or_create_Items_table()
+    open_or_create_fridge_tables()
 
 
 # Test to verify adding an item using POST request

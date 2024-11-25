@@ -23,6 +23,27 @@ export const isExpired = (date, check = null) => {
 }
 
 /**
+ * convert raw createdAt user property to a valid string.
+ * @param {string} createdAt 
+ * @returns {string} properly formatted createdAt date.
+ */
+export const formatCreatedAt = (createdAt) => {
+    const date = new Date(createdAt); // Convert to Date object
+
+    // Extract date components
+    const formattedDate = `${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}/${date.getFullYear()}`;
+
+    // Extract time components
+    const formattedTime = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+
+    // Combine date and time
+    return `${formattedDate} at ${formattedTime}`;
+
+
+
+}
+
+/**
  * Create list item element for UI representation of fridge item.
  * @param list HTML list element to append fridge item to.
  * @param item object containing fridge item data.
@@ -102,6 +123,27 @@ const deleteItemAndRefreshInventoryList = async (deletedItem) => {
     }
 
     window.alert("Item must be expired or have 0 quantity to be deleted.")
+}
+
+/**
+ * Prevent user from going back to website if they logged out.
+ */
+export const redirectToHome = () => {
+    if (!isLoggedIn()) {
+        window.location.href = "index.html"
+    }
+}
+
+/**
+ * Checks if user is logged in or not.
+ * @returns 
+ */
+const isLoggedIn = () => {
+    if (localStorage.getItem("username") != null && localStorage.getItem("uid") != null) {
+        return true
+    }
+
+    return false
 }
 
 // document.addEventListener("click", (event) => {

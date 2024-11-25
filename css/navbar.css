@@ -1,13 +1,14 @@
 nav {
     display: flex;
     align-items: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px 10px;
+    /* Combine padding for consistency */
     width: 100%;
     background-color: hsl(207, 55%, 77%);
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    flex-wrap: wrap;
+    /* Allow items to wrap on smaller screens */
 }
-
 
 .logo {
     width: 60px;
@@ -25,16 +26,19 @@ nav {
 #website-title {
     color: black;
     margin-left: 15px;
+    font-size: 20px;
+    /* Adjust font size for smaller screens */
+    white-space: nowrap;
+    /* Prevent title from breaking into multiple lines */
 }
 
 .menu-item {
     font-size: 25px;
-    text-decoration: None;
+    text-decoration: none;
     color: black;
     border-radius: 5px;
-    padding: 10px 10px 10px 10px;
+    padding: 10px;
     text-align: center;
-    /* background-color: blue; */
     margin-right: 10px;
     transition: background-color 0.3s ease;
 }
@@ -42,8 +46,76 @@ nav {
 .desktop-menu {
     padding-right: 5px;
     margin-left: auto;
+    display: flex;
+    /* Ensure menu items align horizontally */
+    flex-wrap: wrap;
+    /* Allow menu items to wrap on smaller screens */
 }
 
 .menu-item:hover {
     background-color: hsl(207, 55%, 87%);
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /* Stack items vertically */
+        /* align-items: flex-start; */
+        /* Align items to the left */
+    }
+
+    .logo {
+        margin-left: 0;
+        margin: 0;
+        padding: 0;
+        /* Remove extra margin for smaller screens */
+    }
+
+    #website-title {
+        margin-left: 0;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        /* Align with logo */
+        font-size: 18px;
+        /* Reduce font size */
+    }
+
+    .desktop-menu {
+        width: 100%;
+        /* Full-width menu on smaller screens */
+        justify-content: space-evenly;
+        /* Space items evenly */
+    }
+
+    .menu-item {
+        font-size: 20px;
+        /* Reduce font size */
+        padding: 8px;
+        /* Smaller padding for compactness */
+        margin-right: 0;
+        /* Remove right margin */
+    }
+}
+
+@media (max-width: 480px) {
+    .menu-item {
+        /* display: flex; */
+        font-size: 18px;
+        /* Further reduce font size for very small screens */
+        padding: 5px;
+        /* Compact padding */
+    }
+
+    #website-title {
+        font-size: 16px;
+        /* Adjust title size */
+    }
+
+    .logo {
+        width: 50px;
+        /* Smaller logo for tiny screens */
+    }
 }

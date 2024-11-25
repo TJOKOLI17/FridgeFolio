@@ -1,11 +1,11 @@
 import { ItemModel } from "../models/ItemModel.js";
-import { apiKey } from "./key.js";
+import { itemAPIKey } from "./keys.js";
 
 
 export const getItems = async () => {
     try {
         let fridge = [];
-        const response = await fetch(apiKey);
+        const response = await fetch(itemAPIKey);
         if (!response.ok) {
             throw new Error("Error in fetching fridge items")
         }
@@ -23,10 +23,10 @@ export const getItems = async () => {
 export const get_deleted_items = async () => {
     try {
         let trash = [];
-        // const response = await fetch(`${apiKey}/deleted`, {
+        // const response = await fetch(`${itemAPIKey}/deleted`, {
         //     method: 'GET',
         // });
-        const response = await fetch(`${apiKey}/deleted`);
+        const response = await fetch(`${itemAPIKey}/deleted`);
         if (!response.ok) {
             throw new Error("Error in fetching trash can")
         }
@@ -42,7 +42,7 @@ export const get_deleted_items = async () => {
 
 export const addItem = async (newItem) => {
     try {
-        const response = await fetch(apiKey, {
+        const response = await fetch(itemAPIKey, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ export const addItem = async (newItem) => {
             currentItem.name,
             currentItem.amount,
             currentItem.expDate
-        )
+        );
     } catch (error) {
         throw new Error(error)
     }
@@ -69,9 +69,7 @@ export const addItem = async (newItem) => {
 
 export const updateItem = async (modifiedItem) => {
     try {
-        // const response = 
-
-        await fetch(apiKey, {
+        const response = await fetch(itemAPIKey, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -79,18 +77,18 @@ export const updateItem = async (modifiedItem) => {
             body: JSON.stringify(modifiedItem),
         });
 
-        // if (!response.ok) {
-        //     throw new Error(`HTTP error! status: ${response.status}`);
-        // }
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-        // const updatedItem = await response.json();
+        const updatedItem = await response.json();
 
-        // return new ItemModel(
-        //     updatedItem.id,
-        //     updatedItem.name,
-        //     updatedItem.amount,
-        //     updatedItem.expDate
-        // )
+        return new ItemModel(
+            updatedItem.id,
+            updatedItem.name,
+            updatedItem.amount,
+            updatedItem.expDate
+        )
     } catch (error) {
         throw new Error(error)
     }
@@ -99,7 +97,7 @@ export const updateItem = async (modifiedItem) => {
 
 export const deleteItem = async (item) => {
     try {
-        await fetch(`${apiKey}/${item.id}`, {
+        await fetch(`${itemAPIKey}/${item.id}`, {
             method: 'DELETE',
         });
     } catch (error) {
