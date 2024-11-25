@@ -7,7 +7,8 @@
     <title>FridgeFolio</title>
     <link rel="icon" href="/img/fridge-logo.png" type="image/png">
     <link rel="stylesheet" href="css/navbar.css" />
-    <link rel="stylesheet" href="css/styles.css" />
+    <!-- <link rel="stylesheet" href="css/styles.css" /> -->
+    <link rel="stylesheet" href="css/profile.css" />
 </head>
 
 <body>
@@ -17,11 +18,24 @@
         <div class="desktop-menu">
             <a href="inventory.html" class="menu-item">Add Item</a>
             <a href="fridge.html" class="menu-item">Fridge</a>
-            <a href="deleted.html" class="menu-item">Trash Can</a>
+            <a href="deleted.html" class="menu-item">Trash</a>
         </div>
     </nav>
 
+    <div id="user-profile">
+        <h3>Account Information</h3>
+        <p id="username"></p>
+        <!-- <strong> -->
+        <p id="user-id"></p>
+        <!-- </strong> -->
+        <!-- <strong> -->
+        <p id="user-createdAt"></p>
+        <!-- </strong> -->
+    </div>
+
     <main>
+
+
         <!-- Logout Button -->
         <form id="logoutSection" class="all-forms">
             <h2>Come Back Soon!</h2>
@@ -30,7 +44,7 @@
         </form>
     </main>
 
-    <script type="module" src="js/proflle.js"></script>
+    <script type="module" src="js/profile.js"></script>
 </body>
 
 </html>

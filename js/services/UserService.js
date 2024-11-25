@@ -1,6 +1,7 @@
 import { UserCreate, UserResponse } from "../models/UserModels.js";
 import { SignInError, SignUpError } from "../errors/Errors.js";
 import { userAPIKey } from "./keys.js";
+import { formatCreatedAt } from "./sharedService.js";
 
 
 /**
@@ -22,10 +23,12 @@ export const getUserByPassword = async (user) => {
 
         const foundUser = await response.json();
 
+        foundUser.CreatedAt = formatCreatedAt(foundUser.CreatedAt)
+
         return new UserResponse(
             foundUser.uid,
             foundUser.username,
-            foundUser.createdAt
+            foundUser.CreatedAt
         );
     } catch (error) {
         if (error instanceof SignInError) {
@@ -88,10 +91,12 @@ export const createNewUser = async (user) => {
 
         const newUser = await response.json();
 
+        newUser.CreatedAt = formatCreatedAt(newUser.CreatedAt)
+
         return new UserResponse(
             newUser.uid,
             newUser.username,
-            newUser.createdAt
+            newUser.CreatedAt
         );
     } catch (error) {
         if (error instanceof SignUpError) {

@@ -23,6 +23,27 @@ export const isExpired = (date, check = null) => {
 }
 
 /**
+ * convert raw createdAt user property to a valid string.
+ * @param {string} createdAt 
+ * @returns {string} properly formatted createdAt date.
+ */
+export const formatCreatedAt = (createdAt) => {
+    const date = new Date(createdAt); // Convert to Date object
+
+    // Extract date components
+    const formattedDate = `${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}/${date.getFullYear()}`;
+
+    // Extract time components
+    const formattedTime = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+
+    // Combine date and time
+    return `${formattedDate} at ${formattedTime}`;
+
+
+
+}
+
+/**
  * Create list item element for UI representation of fridge item.
  * @param list HTML list element to append fridge item to.
  * @param item object containing fridge item data.

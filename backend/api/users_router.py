@@ -19,6 +19,7 @@ def get_user_by_password(username:str, password:str):
     if(sign_in_attempt is None):
         raise HTTPException(status_code=404, detail="Incorrect username or password")
         # return {"found": None}
+    print(sign_in_attempt)
     return sign_in_attempt
         
 

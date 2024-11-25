@@ -4,6 +4,9 @@ import { toListItem, redirectToHome } from "./services/sharedService.js";
 let boundHandler;
 
 const populateInventoryList = async () => {
+    const itemListTitle = document.getElementById('item-list-title');
+    itemListTitle.textContent = `What's In Your Fridge, ${localStorage.getItem("username")}`
+
     const inventoryList = document.getElementById('inventory-list');
     inventoryList.replaceChildren();
     try {

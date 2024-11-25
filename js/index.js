@@ -49,6 +49,7 @@ const logIn = async () => {
 
         localStorage.setItem("username", user.username)
         localStorage.setItem("uid", String(user.uid))
+        localStorage.setItem("createdAt", String(user.createdAt))
         window.location.href = "fridge.html"
     } catch (error) {
         window.alert(error.message)
@@ -77,6 +78,7 @@ const createAccount = async () => {
         const newUser = await createNewUser(new UserCreate(newUsername, newPassword))
         localStorage.setItem("username", newUser.username)
         localStorage.setItem("uid", String(newUser.uid))
+        localStorage.setItem("createdAt", String(newUser.createdAt))
         window.location.href = "fridge.html"
     } catch (error) {
         window.alert(error.message)
