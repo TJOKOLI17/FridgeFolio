@@ -1,6 +1,6 @@
 import { ItemModel } from "./models/ItemModel.js";
 import { getUserItems, updateItem } from "./services/itemService.js";
-import { toListItem, redirectToHome } from "./services/sharedService.js";
+import { toListItem, redirectToHome, restrictPageContent } from "./services/sharedService.js";
 let boundHandler;
 
 const populateInventoryList = async () => {
@@ -64,6 +64,13 @@ const handleAmountInputUpdate = async (event, origValue, newValue, amountInput, 
     }
 }
 
+const updateInventoryList = (item_id) => {
+    const inventoryList = document.getElementById('inventory-list');
+    const listItems = document.querySelectorAll("li")
+
+    listItems = Array.of(listItems).filter((listItem) => { listItem })
+}
+
 
 const backToSpan = (amountInput, value, item) => {
     amountInput.removeEventListener("keydown", boundHandler);
@@ -72,7 +79,7 @@ const backToSpan = (amountInput, value, item) => {
     updatedSpan.textContent = value;
 
     // Replace the input with the original value and re-add the event listener
-    updatedSpan.addEventListener('click', enableEditMode);
+    updatedSpan.addEventListener('click', (event) => enableEditMode(event, item));
     amountInput.replaceWith(updatedSpan);
 
 }
@@ -86,9 +93,9 @@ const updateListItem = async (newValue, item) => {
 }
 
 
-
-populateInventoryList()
+restrictPageContent()
 redirectToHome()
+populateInventoryList()
 
 // console.log(localStorage.getItem("username"));
 // console.log(localStorage.getItem("uid"));

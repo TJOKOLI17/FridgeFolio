@@ -1,6 +1,5 @@
-import { ItemModel } from "./models/ItemModel.js";
 import { getUserDeletedItems } from "./services/itemService.js";
-import { toListItem, redirectToHome } from "./services/sharedService.js";
+import { toListItem, redirectToHome, restrictPageContent } from "./services/sharedService.js";
 
 const populateDeletedList = async () => {
     try {
@@ -16,5 +15,6 @@ const populateDeletedList = async () => {
     }
 }
 
-populateDeletedList()
+restrictPageContent()
 redirectToHome()
+populateDeletedList()

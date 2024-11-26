@@ -1,5 +1,5 @@
 import { addItem } from "./services/itemService.js";
-import { isExpired, redirectToHome } from "./services/sharedService.js";
+import { isExpired, redirectToHome, restrictPageContent } from "./services/sharedService.js";
 
 const itemSubmit = document.getElementById("item-submit")
 
@@ -63,4 +63,5 @@ const toRecentlyAddedListItem = (item) => {
     return listItem
 }
 
+restrictPageContent()
 redirectToHome()
