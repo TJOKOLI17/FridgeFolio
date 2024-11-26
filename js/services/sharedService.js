@@ -4,7 +4,7 @@
  * @copyright 2024
  */
 
-import { getItems, deleteItem } from "./itemService.js";
+import { getUserItems, deleteItem } from "./itemService.js";
 
 /**
  * Check if item is expired or expires today.
@@ -56,21 +56,21 @@ export const toListItem = (list, item, inTrash) => {
         listItem.innerHTML = `
                     <div class="item-model-container">
                         <div class="item-name"><strong>Name: </strong> ${item.name}</div>
-                        <div class="item-amount"><strong> Amount: </strong> <span class="${!inTrash ? `amt-num` : ''}" onclick="${!inTrash ? `enableEditMode(event, ${item.id}, '${item.name}', ${item.amount}, '${item.expDate}')` : ''}">${item.amount}</span></div> 
+                        <div class="item-amount"><strong> Amount: </strong> <span class="${!inTrash ? `amt-num` : ''}" onclick="${!inTrash ? `enableEditMode(event, ${item.id}, '${item.uid}', '${item.name}', ${item.amount}, '${item.expDate}')` : ''}">${item.amount}</span></div> 
                         <div class="item-exp-date expired"><strong> Expiration Date: </strong> ${new Date(item.expDate).toDateString()}</div>
                     </div>`;
     } else if (isExpired(item.expDate, "today")) {
         listItem.innerHTML = `
                     <div class="item-model-container">
                         <div class="item-name"><strong>Name: </strong> ${item.name}</div>
-                        <div class="item-amount"><strong> Amount: </strong> <span class="${!inTrash ? `amt-num` : ''}" onclick="${!inTrash ? `enableEditMode(event, ${item.id}, '${item.name}', ${item.amount}, '${item.expDate}')` : ''}">${item.amount}</span></div> 
+                        <div class="item-amount"><strong> Amount: </strong> <span class="${!inTrash ? `amt-num` : ''}" onclick="${!inTrash ? `enableEditMode(event, ${item.id}, '${item.uid}', '${item.name}', ${item.amount}, '${item.expDate}')` : ''}">${item.amount}</span></div> 
                         <div class="item-exp-date last-day"><strong> Expiration Date: </strong> ${new Date(item.expDate).toDateString()}</div>
                     </div>`;
     } else {
         listItem.innerHTML = `
                     <div class="item-model-container">
                         <div class="item-name"><strong>Name: </strong> ${item.name}</div>
-                        <div class="item-amount"><strong> Amount: </strong> <span class="${!inTrash ? `amt-num` : ''}" onclick="${!inTrash ? `enableEditMode(event, ${item.id}, '${item.name}', ${item.amount}, '${item.expDate}')` : ''}">${item.amount}</span></div> 
+                        <div class="item-amount"><strong> Amount: </strong> <span class="${!inTrash ? `amt-num` : ''}" onclick="${!inTrash ? `enableEditMode(event, ${item.id}, '${item.uid}', '${item.name}', ${item.amount}, '${item.expDate}')` : ''}">${item.amount}</span></div> 
                         <div class="item-exp-date"><strong> Expiration Date: </strong> ${new Date(item.expDate).toDateString()}</div>
                     </div>`;
     }
@@ -109,7 +109,7 @@ const deleteItemAndRefreshInventoryList = async (deletedItem) => {
         try {
             const inventoryList = document.getElementById('inventory-list');
             inventoryList.replaceChildren();
-            const fridgeItems = await getItems() // ItemModel[]
+            const fridgeItems = await getUserItems() // ItemModel[]
             fridgeItems.forEach((fridgeItem) => {
                 toListItem(inventoryList, fridgeItem, false);
             })

@@ -2,16 +2,17 @@ import { ItemModel } from "../models/ItemModel.js";
 import { itemAPIKey } from "./keys.js";
 
 
-export const getItems = async () => {
+export const getUserItems = async () => {
     try {
         let fridge = [];
-        const response = await fetch(itemAPIKey);
+        const userId = Number(localStorage.getItem("uid"));
+        const response = await fetch(`${itemAPIKey}/${userId}`);
         if (!response.ok) {
             throw new Error("Error in fetching fridge items")
         }
         const allItems = await response.json()
         for (let item of allItems) {
-            fridge.push(new ItemModel(item.id, item.name, item.amount, item.expDate))
+            fridge.push(new ItemModel(item.id, item.uid, item.name, item.amount, item.expDate))
         }
         return fridge
     } catch (error) {
@@ -20,19 +21,17 @@ export const getItems = async () => {
     }
 }
 
-export const get_deleted_items = async () => {
+export const getUserDeletedItems = async () => {
     try {
         let trash = [];
-        // const response = await fetch(`${itemAPIKey}/deleted`, {
-        //     method: 'GET',
-        // });
-        const response = await fetch(`${itemAPIKey}/deleted`);
+        const userId = Number(localStorage.getItem("uid"));
+        const response = await fetch(`${itemAPIKey}/deleted/${userId}`);
         if (!response.ok) {
             throw new Error("Error in fetching trash can")
         }
         const allDeletedItems = await response.json()
         for (let item of allDeletedItems) {
-            trash.push(new ItemModel(item.id, item.name, item.amount, item.expDate))
+            trash.push(new ItemModel(item.id, item.uid, item.name, item.amount, item.expDate))
         }
         return trash
     } catch (error) {
@@ -58,6 +57,7 @@ export const addItem = async (newItem) => {
 
         return new ItemModel(
             currentItem.id,
+            currentItem.uid,
             currentItem.name,
             currentItem.amount,
             currentItem.expDate
@@ -85,6 +85,7 @@ export const updateItem = async (modifiedItem) => {
 
         return new ItemModel(
             updatedItem.id,
+            updateItem.uid,
             updatedItem.name,
             updatedItem.amount,
             updatedItem.expDate
@@ -97,7 +98,7 @@ export const updateItem = async (modifiedItem) => {
 
 export const deleteItem = async (item) => {
     try {
-        await fetch(`${itemAPIKey}/${item.id}`, {
+        await fetch(`${itemAPIKey}/${item.id}/${item.uid}`, {
             method: 'DELETE',
         });
     } catch (error) {

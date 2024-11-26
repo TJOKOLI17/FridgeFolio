@@ -43,17 +43,17 @@ db_commands: dict[str, str] = {
             CREATE TRIGGER item_deletion
             AFTER DELETE ON Items
             BEGIN
-                INSERT INTO deletedItems (id, name, amount, expDate) VALUES (OLD.id, OLD.name, OLD.amount, OLD.expDate);
+                INSERT INTO deletedItems (id, uid,name, amount, expDate) VALUES (OLD.id, OLD.uid, OLD.name, OLD.amount, OLD.expDate);
             END;
         ''',
 
     "confirm_item_deletion_validation_trigger_exists":'''SELECT name FROM sqlite_master WHERE type='trigger' AND name='item_deletion_validation';''',
     "confirm_item_deletion_trigger_exists":'''SELECT name FROM sqlite_master WHERE type='trigger' AND name='item_deletion';''',
     
-    "get_all_items": '''SELECT * FROM Items''',
-    "get_all_items_by_uid": '''SELECT * FROM Items WHERE uid = ?''',
-    "get_item_by_id_and_uid": '''SELECT * FROM Items WHERE id = ? AND uid = ?''',
-    "get_item_by_name_and_uid": '''SELECT * FROM Items WHERE name = ? and uid = ?''',
+    "get_all_items": '''SELECT * FROM Items ORDER BY expDate''',
+    "get_all_items_by_uid": '''SELECT * FROM Items WHERE uid = ? ORDER BY expDate''',
+    "get_item_by_id_and_uid": '''SELECT * FROM Items WHERE id = ? AND uid = ? ORDER BY expDate''',
+    "get_item_by_name_and_uid": '''SELECT * FROM Items WHERE name = ? and uid = ? ORDER BY expDate''',
     
     "get_all_deleted_items": '''SELECT * FROM deletedItems ORDER BY expDate''',
     "get_all_deleted_items_by_uid": '''SELECT * FROM deletedItems WHERE uid = ? ORDER BY expDate''',
@@ -137,6 +137,8 @@ def read_items() -> list[ItemModel]:
     db = connect_to_db()
     cursor = db.cursor()
     items: list[ItemModel] = []
+
+    # cursor.execute('''DROP TRIGGER IF EXISTS item_deletion;''')
 
     cursor.execute(db_commands["get_all_items"])
     rows = cursor.fetchall()

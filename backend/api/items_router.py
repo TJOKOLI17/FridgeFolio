@@ -23,7 +23,7 @@ async def get_user_items(user_id:int):
 
 @router.get("/deleted/{user_id}", response_model=list[ItemModel])
 async def get_user_deleted_items(user_id:int):
-    deleted_items: list[ItemModel] = read_deleted_items_by_uid()
+    # deleted_items: list[ItemModel] = read_deleted_items_by_uid()
     return read_deleted_items_by_uid(user_id)
 
 # @router.get("/{item_id}", response_model=ItemModel)
@@ -34,7 +34,7 @@ async def get_user_deleted_items(user_id:int):
 #     return item
 
 @router.post("/", response_model=ItemModel)
-async def create_new_item_for_user(item: ItemModel):
+def create_new_item_for_user(item: ItemModel):
     return create_item(item)
 
 @router.put("/", response_model=ItemModel)

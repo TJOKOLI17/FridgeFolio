@@ -1,5 +1,5 @@
 import { ItemModel } from "./models/ItemModel.js";
-import { getItems, updateItem } from "./services/itemService.js";
+import { getUserItems, updateItem } from "./services/itemService.js";
 import { toListItem, redirectToHome } from "./services/sharedService.js";
 let boundHandler;
 
@@ -10,7 +10,7 @@ const populateInventoryList = async () => {
     const inventoryList = document.getElementById('inventory-list');
     inventoryList.replaceChildren();
     try {
-        const fridgeItems = await getItems() // ItemModel[]
+        const fridgeItems = await getUserItems() // ItemModel[]
         fridgeItems.forEach((fridgeItem) => {
             inventoryList.append(toListItem(inventoryList, fridgeItem, false));
             inventoryList.appendChild(document.createElement('br'));
@@ -79,7 +79,9 @@ const backToSpan = (amountInput, value, item) => {
 
 
 const updateListItem = async (newValue, item) => {
-    const modifiedItem = new ItemModel(item[0], item[1], newValue, item[3])
+
+    const [ID, UID, NAME, EXPDATE] = [0, 1, 2, 4];
+    const modifiedItem = new ItemModel(item[ID], item[UID], item[NAME], newValue, item[EXPDATE])
     await updateItem(modifiedItem)
 }
 

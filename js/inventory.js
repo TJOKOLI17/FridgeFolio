@@ -12,6 +12,7 @@ itemSubmit.addEventListener('submit', async (event) => {
     try {
         const newItem = await addItem({
             name: name,
+            uid: Number(localStorage.getItem("uid")),
             amount: amount,
             expDate: expDate
         })
