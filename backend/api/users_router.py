@@ -9,7 +9,7 @@ router = APIRouter(
 )
 
 @router.get("/", response_model=list[UserResponse])
-async def get_users():
+async def get_all_users():
     return read_users()
 
 @router.get("/login", response_model=UserResponse)

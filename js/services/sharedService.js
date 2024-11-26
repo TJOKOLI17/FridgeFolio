@@ -4,12 +4,13 @@
  * @copyright 2024
  */
 
-import { getItems, deleteItem } from "./itemService.js";
+import { getUserItems, deleteItem } from "./itemService.js";
 
 /**
  * Check if item is expired or expires today.
  * @param date item's expiration date.
  * @param check optional paramter to check if item expires today.
+ * @returns {boolean} if item is expired (true), expires today (true), or is still good (false).
  */
 export const isExpired = (date, check = null) => {
     const today = new Date(String(new Date().toLocaleDateString()))
@@ -51,26 +52,27 @@ export const formatCreatedAt = (createdAt) => {
  */
 export const toListItem = (list, item, inTrash) => {
     const listItem = document.createElement('li');
+    const escapeString = (str) => str.replace(/'/g, "\\'").replace(/"/g, '\\"');
 
     if (isExpired(item.expDate)) {
         listItem.innerHTML = `
                     <div class="item-model-container">
                         <div class="item-name"><strong>Name: </strong> ${item.name}</div>
-                        <div class="item-amount"><strong> Amount: </strong> <span class="${!inTrash ? `amt-num` : ''}" onclick="${!inTrash ? `enableEditMode(event, ${item.id}, '${item.name}', ${item.amount}, '${item.expDate}')` : ''}">${item.amount}</span></div> 
+                        <div class="item-amount"><strong> Amount: </strong> <span class="${!inTrash ? `amt-num` : ''}" onclick="${!inTrash ? `enableEditMode(event, ${item.id}, '${item.uid}', '${escapeString(item.name)}', ${item.amount}, '${item.expDate}')` : ''}">${item.amount}</span></div> 
                         <div class="item-exp-date expired"><strong> Expiration Date: </strong> ${new Date(item.expDate).toDateString()}</div>
                     </div>`;
     } else if (isExpired(item.expDate, "today")) {
         listItem.innerHTML = `
                     <div class="item-model-container">
                         <div class="item-name"><strong>Name: </strong> ${item.name}</div>
-                        <div class="item-amount"><strong> Amount: </strong> <span class="${!inTrash ? `amt-num` : ''}" onclick="${!inTrash ? `enableEditMode(event, ${item.id}, '${item.name}', ${item.amount}, '${item.expDate}')` : ''}">${item.amount}</span></div> 
+                        <div class="item-amount"><strong> Amount: </strong> <span class="${!inTrash ? `amt-num` : ''}" onclick="${!inTrash ? `enableEditMode(event, ${item.id}, '${item.uid}', '${escapeString(item.name)}', ${item.amount}, '${item.expDate}')` : ''}">${item.amount}</span></div>  
                         <div class="item-exp-date last-day"><strong> Expiration Date: </strong> ${new Date(item.expDate).toDateString()}</div>
                     </div>`;
     } else {
         listItem.innerHTML = `
                     <div class="item-model-container">
                         <div class="item-name"><strong>Name: </strong> ${item.name}</div>
-                        <div class="item-amount"><strong> Amount: </strong> <span class="${!inTrash ? `amt-num` : ''}" onclick="${!inTrash ? `enableEditMode(event, ${item.id}, '${item.name}', ${item.amount}, '${item.expDate}')` : ''}">${item.amount}</span></div> 
+                        <div class="item-amount"><strong> Amount: </strong> <span class="${!inTrash ? `amt-num` : ''}" onclick="${!inTrash ? `enableEditMode(event, ${item.id}, '${item.uid}', '${escapeString(item.name)}', ${item.amount}, '${item.expDate}')` : ''}">${item.amount}</span></div> 
                         <div class="item-exp-date"><strong> Expiration Date: </strong> ${new Date(item.expDate).toDateString()}</div>
                     </div>`;
     }
@@ -109,7 +111,7 @@ const deleteItemAndRefreshInventoryList = async (deletedItem) => {
         try {
             const inventoryList = document.getElementById('inventory-list');
             inventoryList.replaceChildren();
-            const fridgeItems = await getItems() // ItemModel[]
+            const fridgeItems = await getUserItems() // ItemModel[]
             fridgeItems.forEach((fridgeItem) => {
                 toListItem(inventoryList, fridgeItem, false);
             })
@@ -123,6 +125,16 @@ const deleteItemAndRefreshInventoryList = async (deletedItem) => {
     }
 
     window.alert("Item must be expired or have 0 quantity to be deleted.")
+}
+
+/**
+ * Blocks unauthortized access to website.
+ */
+export const restrictPageContent = () => {
+    if (!isLoggedIn()) {
+        document.body.innerHTML = "";
+        return;
+    }
 }
 
 /**

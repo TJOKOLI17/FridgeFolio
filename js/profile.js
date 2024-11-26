@@ -1,4 +1,4 @@
-import { redirectToHome } from "./services/sharedService.js";
+import { redirectToHome, restrictPageContent } from "./services/sharedService.js";
 
 const userId = document.getElementById("user-id");
 const usernname = document.getElementById("username");
@@ -20,4 +20,6 @@ const logOut = () => {
 
 window.logOut = logOut
 
+
+restrictPageContent()
 redirectToHome()
