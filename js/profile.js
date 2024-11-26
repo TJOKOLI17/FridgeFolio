@@ -1,4 +1,5 @@
 import { redirectToHome, restrictPageContent } from "./services/sharedService.js";
+import { deleteUser } from "./services/UserService.js";
 
 const userId = document.getElementById("user-id");
 const usernname = document.getElementById("username");
@@ -18,7 +19,18 @@ const logOut = () => {
     window.location.href = "index.html"
 };
 
+const deleteUserAndLogOut = async () => {
+    if (window.confirm("Are you sure? \nThis is a permanent action and cannot be undone.")) {
+        await deleteUser()
+        logOut()
+    } else {
+        return;
+    }
+}
+
 window.logOut = logOut
+window.deleteUserAndLogOut = deleteUserAndLogOut
+
 
 
 restrictPageContent()

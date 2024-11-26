@@ -106,3 +106,14 @@ export const createNewUser = async (user) => {
         throw new Error(`Unexpected error while logging in: ${error.message}`);
     }
 }
+
+export const deleteUser = async () => {
+    try {
+        const userId = Number(localStorage.getItem("uid"));
+        await fetch(`${userAPIKey}/${userId}`, {
+            method: 'DELETE',
+        });
+    } catch (error) {
+        throw new Error(error)
+    }
+}
