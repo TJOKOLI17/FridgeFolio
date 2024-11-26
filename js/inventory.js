@@ -1,5 +1,5 @@
 import { addItem } from "./services/itemService.js";
-import { isExpired, redirectToHome } from "./services/sharedService.js";
+import { isExpired, redirectToHome, restrictPageContent } from "./services/sharedService.js";
 
 const itemSubmit = document.getElementById("item-submit")
 
@@ -12,6 +12,7 @@ itemSubmit.addEventListener('submit', async (event) => {
     try {
         const newItem = await addItem({
             name: name,
+            uid: Number(localStorage.getItem("uid")),
             amount: amount,
             expDate: expDate
         })
@@ -62,4 +63,5 @@ const toRecentlyAddedListItem = (item) => {
     return listItem
 }
 
+restrictPageContent()
 redirectToHome()
