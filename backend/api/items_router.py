@@ -41,7 +41,13 @@ def create_new_item_for_user(item: ItemModel):
 async def update_item_for_users(item: ItemModel): 
     updated_item: ItemModel = update_item_uid(item.uid, item.id, item.amount)
     if updated_item is None:
-        raise HTTPException(status_code=404, detail={"item": item, "message": "Item not found"})
+        raise HTTPException(
+            status_code=404,
+            detail={
+                "item": item.dict(),  # Convert ItemModel to a dictionary
+                "message": "Item not found"
+            }
+        )
     return updated_item
 
 @router.delete("/{item_id}/{user_id}", response_model=None)
