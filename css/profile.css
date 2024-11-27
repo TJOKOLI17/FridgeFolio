@@ -61,12 +61,13 @@ body {
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease, color 0.3s ease;
     margin-left: auto;
 }
 
 #account-delete-button:hover {
-    background-color: hsl(153, 100%, 80%);
+    background-color: hsl(0, 100%, 50%);
+    color: white;
 }
 
 h3 {

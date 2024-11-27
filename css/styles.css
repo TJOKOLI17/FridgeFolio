@@ -49,7 +49,7 @@ main {
     /* Wrap content responsively */
     gap: 20px;
     /* Space between children */
-    padding: 20px;
+    padding: 30px;
     background-color: hsl(164, 81%, 30%);
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);

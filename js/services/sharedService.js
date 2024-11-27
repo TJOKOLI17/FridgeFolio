@@ -28,21 +28,53 @@ export const isExpired = (date, check = null) => {
  * @param {string} createdAt 
  * @returns {string} properly formatted createdAt date.
  */
+// export const formatCreatedAt = (createdAt) => {
+//     const date = new Date(createdAt); // Convert to Date object
+
+//     // Extract date components
+//     const formattedDate = `${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}/${date.getFullYear()}`;
+
+//     // Extract time components
+//     const formattedTime = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+
+//     // Combine date and time
+//     return `${formattedDate} at ${formattedTime}`;
+
+
+
+// }
+
 export const formatCreatedAt = (createdAt) => {
-    const date = new Date(createdAt); // Convert to Date object
+    // Convert createdAt to a Date object
+    if (!createdAt.endsWith("Z") && !createdAt.includes("+")) {
+        createdAt += "Z";
+    }
 
-    // Extract date components
-    const formattedDate = `${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}/${date.getFullYear()}`;
+    const date = new Date(createdAt);
 
-    // Extract time components
-    const formattedTime = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+    // Define options for EST formatting
+    const options = {
+        timeZone: "America/New_York",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false, // Optional: Use 24-hour format
+    };
 
-    // Combine date and time
-    return `${formattedDate} at ${formattedTime}`;
+    // Use Intl.DateTimeFormat to format the date to EST
+    const formatter = new Intl.DateTimeFormat("en-US", options);
+    const parts = formatter.formatToParts(date);
 
+    // Extract parts (e.g., month, day, year, hour, minute)
+    const datePart = `${parts.find(p => p.type === "month").value}/${parts.find(p => p.type === "day").value}/${parts.find(p => p.type === "year").value}`;
+    const timePart = `${parts.find(p => p.type === "hour").value}:${parts.find(p => p.type === "minute").value}`;
 
+    // Combine and return the formatted date and time
+    return `${datePart} at ${timePart}`;
+};
 
-}
 
 /**
  * Create list item element for UI representation of fridge item.
