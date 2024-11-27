@@ -71,9 +71,6 @@ const createAccount = async () => {
         const newPassword = document.getElementById("newPassword").value.trim();
         const confirmPassword = document.getElementById("confirmPassword").value.trim();
 
-        // console.log(newPassword);
-        // console.log(confirmPassword);
-        // console.log();
 
         if (username === "" || password === "" || confirmPassword === "") {
             window.alert("Please fill out all fields.")

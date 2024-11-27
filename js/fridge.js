@@ -96,6 +96,3 @@ const updateListItem = async (newValue, item) => {
 restrictPageContent()
 redirectToHome()
 populateInventoryList()
-
-// console.log(localStorage.getItem("username"));
-// console.log(localStorage.getItem("uid"));
