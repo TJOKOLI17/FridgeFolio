@@ -3,8 +3,10 @@
  * @author Tobenna Okoli, Luis Fajardo
  * @copyright 2024
  */
-
 import { getUserItems, deleteItem } from "./itemService.js";
+
+const HOME_PAGE = "index.html"
+
 
 /**
  * Check if item is expired or expires today.
@@ -174,7 +176,7 @@ export const restrictPageContent = () => {
  */
 export const redirectToHome = () => {
     if (!isLoggedIn()) {
-        window.location.href = "index.html"
+        window.location.href = HOME_PAGE
     }
 }
 
@@ -182,13 +184,7 @@ export const redirectToHome = () => {
  * Checks if user is logged in or not.
  * @returns 
  */
-const isLoggedIn = () => {
-    if (localStorage.getItem("username") != null && localStorage.getItem("uid") != null) {
-        return true
-    }
-
-    return false
-}
+const isLoggedIn = () => localStorage.getItem("username") != null && localStorage.getItem("uid") != null
 
 // document.addEventListener("click", (event) => {
 //     const newValue = Number(String(amountInput.value));  // Convert the input value to a number

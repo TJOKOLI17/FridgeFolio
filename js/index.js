@@ -3,6 +3,8 @@
 import { UserCreate, UserResponse } from "./models/UserModels.js";
 import { getUserByPassword, getUserById, createNewUser } from "./services/UserService.js";
 
+const MAIN_PAGE = "fridge.html"
+
 
 /**Show the Create Account form*/
 const showCreateAccountForm = () => {
@@ -17,28 +19,6 @@ const showLoginForm = () => {
     document.getElementById("logoutSection").style.display = "none";
 };
 
-/**Log In Functionality*/
-// const logIn = (event) => {
-//     event.preventDefault();
-//     let username = document.getElementById("username").value.trim();
-//     let password = document.getElementById("password").value.trim();
-
-//     // const storedUsername = "orderbyrizz"// localStorage.getItem("username");
-//     // const storedPassword = "anwica" // localStorage.getItem("password");
-
-
-//     if (storedUsername === username && storedPassword === password) {
-//         alert(`Welcome, ${username}!`);
-//         document.getElementById("loginform").style.display = "none";
-//         document.getElementById("createAccountForm").style.display = "none";
-//         document.getElementById("username").value = "";
-//         document.getElementById("password").value = "";
-//         document.getElementById("logoutSection").style.display = "flex";
-//         window.location.href = "fridge.html"
-//     } else {
-//         alert("Invalid username or password. Please try again.");
-//     }
-// };
 
 /**Log in account functionality*/
 const logIn = async () => {
@@ -56,7 +36,7 @@ const logIn = async () => {
         localStorage.setItem("username", user.username)
         localStorage.setItem("uid", String(user.uid))
         localStorage.setItem("createdAt", String(user.createdAt))
-        window.location.href = "fridge.html"
+        window.location.href = MAIN_PAGE
     } catch (error) {
         window.alert(error.message)
     }
@@ -86,7 +66,7 @@ const createAccount = async () => {
         localStorage.setItem("username", newUser.username)
         localStorage.setItem("uid", String(newUser.uid))
         localStorage.setItem("createdAt", String(newUser.createdAt))
-        window.location.href = "fridge.html"
+        window.location.href = MAIN_PAGE
     } catch (error) {
         window.alert(error.message)
     }
