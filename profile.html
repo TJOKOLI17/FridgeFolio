@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FridgeFolio</title>
+    <link rel="icon" href="/img/fridge-logo.png" type="image/png">
+    <link rel="stylesheet" href="css/navbar.css" />
+    <link rel="stylesheet" href="css/profile.css" />
+</head>
+
+<body>
+    <nav>
+        <a href="profile.html" class="logo"><img src="img/fridge-icon.png" class="logo" alt="fridge icon"></a>
+        <h2 id="website-title">FridgeFolio</h2>
+        <div class="desktop-menu">
+            <a href="inventory.html" class="menu-item">Add Item</a>
+            <a href="fridge.html" class="menu-item">Fridge</a>
+            <a href="trash.html" class="menu-item">Trash</a>
+        </div>
+    </nav>
+
+    <div id="account-features">
+        <div id="user-profile">
+            <h3>Account Information</h3>
+            <p id="username"></p>
+            <p id="user-id"></p>
+            <p id="user-createdAt"></p>
+        </div>
+        <button id="account-delete-button" onclick="deleteUserAndLogOut()">Delete account</button>
+    </div>
+
+    <main>
+
+
+        <!-- Logout Button -->
+        <form id="logoutSection" class="all-forms">
+            <h2>Come Back Soon!</h2>
+            <p style="margin-bottom: 30px">You are currently logged in.</p>
+            <button class="login-state-button" type="button" onclick="logOut()">Logout</button>
+        </form>
+    </main>
+
+    <script type="module" src="js/profile.js"></script>
+</body>
+
+</html>

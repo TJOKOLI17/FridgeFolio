@@ -11,16 +11,6 @@
 </head>
 
 <body>
-    <!-- <nav>
-        <a href="index.html"><img src="img/fridge-icon.png" class="logo" alt="fridge icon"></a>
-        <h2 id="website-title">FridgeFolio</h2>
-        <div class="desktop-menu">
-            <a href="inventory.html" class="menu-item">Add Item</a>
-            <a href="fridge.html" class="menu-item">Fridge</a>
-            <a href="deleted.html" class="menu-item">Trash Can</a>
-        </div>
-    </nav> -->
-
     <!-- Login Form -->
     <main>
         <div id="homepage-logo-container">
@@ -36,7 +26,7 @@
                 <input type="password" id="password" name="password" placeholder="Enter your password" required><br><br>
 
                 <div class="account-buttons">
-                    <button class="login-state-button" type="submit" onclick="logIn(event)">Login</button>
+                    <button class="login-state-button" type="button" onclick="logIn()">Login</button>
                     <p>Don't have an account? <span onclick="showCreateAccountForm()">Sign Up</span></p>
                 </div>
             </form>
@@ -57,7 +47,8 @@
                     placeholder="Confirm your new password" required><br><br>
 
                 <div class="account-buttons">
-                    <button class="login-state-button" type="button" onclick="createAccount()">Create Account</button>
+                    <button class="login-state-button" type="button" onclick="createAccount()">Create
+                        Account</button>
                     <p>Already have an account? <span onclick="showLoginForm()">Sign In</span></p>
                 </div>
             </form>
@@ -71,7 +62,7 @@
         </div>
     </main>
 
-    <script src="js/index.js"></script>
+    <script type="module" src="js/index.js"></script>
 </body>
 
 </html>

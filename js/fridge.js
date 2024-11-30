@@ -1,13 +1,16 @@
 import { ItemModel } from "./models/ItemModel.js";
-import { getItems, updateItem } from "./services/itemService.js";
-import { toListItem } from "./services/sharedService.js";
+import { getUserItems, updateItem } from "./services/itemService.js";
+import { toListItem, redirectToHome, restrictPageContent } from "./services/sharedService.js";
 let boundHandler;
 
 const populateInventoryList = async () => {
+    const itemListTitle = document.getElementById('item-list-title');
+    itemListTitle.textContent = `What's In Your Fridge, ${localStorage.getItem("username")}`
+
     const inventoryList = document.getElementById('inventory-list');
     inventoryList.replaceChildren();
     try {
-        const fridgeItems = await getItems() // ItemModel[]
+        const fridgeItems = await getUserItems() // ItemModel[]
         fridgeItems.forEach((fridgeItem) => {
             inventoryList.append(toListItem(inventoryList, fridgeItem, false));
             inventoryList.appendChild(document.createElement('br'));
@@ -61,6 +64,13 @@ const handleAmountInputUpdate = async (event, origValue, newValue, amountInput, 
     }
 }
 
+const updateInventoryList = (item_id) => {
+    const inventoryList = document.getElementById('inventory-list');
+    const listItems = document.querySelectorAll("li")
+
+    listItems = Array.of(listItems).filter((listItem) => { listItem })
+}
+
 
 const backToSpan = (amountInput, value, item) => {
     amountInput.removeEventListener("keydown", boundHandler);
@@ -69,15 +79,20 @@ const backToSpan = (amountInput, value, item) => {
     updatedSpan.textContent = value;
 
     // Replace the input with the original value and re-add the event listener
-    updatedSpan.addEventListener('click', enableEditMode);
+    updatedSpan.addEventListener('click', (event) => enableEditMode(event, item));
     amountInput.replaceWith(updatedSpan);
 
 }
 
 
 const updateListItem = async (newValue, item) => {
-    const modifiedItem = new ItemModel(item[0], item[1], newValue, item[3])
+
+    const [ID, UID, NAME, EXPDATE] = [0, 1, 2, 4];
+    const modifiedItem = new ItemModel(item[ID], item[UID], item[NAME], newValue, item[EXPDATE])
     await updateItem(modifiedItem)
 }
 
+
+restrictPageContent()
+redirectToHome()
 populateInventoryList()
