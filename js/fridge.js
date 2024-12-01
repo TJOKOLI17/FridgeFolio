@@ -92,7 +92,25 @@ const updateListItem = async (newValue, item) => {
     await updateItem(modifiedItem)
 }
 
+const filterItems = () => {
+    const query = document.getElementById('search-bar').value.toLowerCase();
+    const listItems = document.querySelectorAll('#inventory-list > li, #inventory-list > br');
+
+    listItems.forEach((item) => {
+        if (item.tagName === 'LI') {
+            const itemName = item.querySelector('.item-name').textContent.toLowerCase();
+            item.style.display = itemName.includes(query) ? '' : 'none';
+        } else if (item.tagName === 'BR') {
+            // Handle <br>: Show only if the previous <li> is visible
+            const prevElement = item.previousElementSibling;
+            item.style.display = prevElement && prevElement.style.display !== 'none' ? '' : 'none';
+        }
+    });
+};
+
+document.getElementById('search-bar').addEventListener('input', filterItems);
 
 restrictPageContent()
 redirectToHome()
 populateInventoryList()
+
