@@ -15,11 +15,11 @@ const HOME_PAGE = "index.html"
  * @returns {boolean} if item is expired (true), expires today (true), or is still good (false).
  */
 export const isExpired = (date, check = null) => {
-    const today = new Date(String(new Date().toLocaleDateString()))
+    let today = new Date(String(new Date().toLocaleDateString()))
 
     if (check == "today") {
-        const todayAsString = `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`
-        return date === todayAsString
+        today = `${today.getFullYear()}/${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getDate()).padStart(2, '0')}`;
+        return date === today
     }
 
     return new Date(date) < today
