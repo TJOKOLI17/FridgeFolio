@@ -1,6 +1,8 @@
 import pytest
 import os
 import sqlite3
+
+from rich import _console
 from backend.api.models import ItemModel, UserModels
 from backend.database.items_database import *
 from backend.database.users_database import *
@@ -11,15 +13,10 @@ item_data2 = ItemModel(uid=1, name="Bread", amount=2, expDate="2024-12-31")
 
 item_data3 = ItemModel(uid=2, name="Milk", amount=3, expDate="2024-12-31")
 
-user_data1 = {
-    "username": "testuser1",
-    "password": "pw1"
-}
+user_data1 = UserCreate(username="testuser1", password="pw1")
 
-user_data2 = {
-    "username": "testuser2",
-    "password": "pw2"
-}
+user_data2 = UserCreate(username="testuser2", password="pw2")
+
 
 # Fixture to create and clean up resources after each test
 @pytest.fixture(scope="function", autouse=True)
@@ -106,8 +103,62 @@ def test_read_deleted_items_by_uid():
 
 ### USER TESTS ###
 
-# def test_create_user():
-#     """Test adding a user to the database."""
-#     user = create_user(user_data1)
-#     assert user.uid == 1
-#     assert user.username == "testuser1"
+def test_create_user_1():
+    """Test adding a user to the database."""
+    user = create_user(user_data1)
+    assert user.uid == 1
+    assert user.username == "testuser1"
+
+def test_create_user_2():
+    """Test adding a user to the database with a dictionary."""
+    user1 = create_user(user_data1)
+    user2 = create_user(user_data2)
+    assert user2.uid == 2
+    assert user2.username == "testuser2"
+
+def test_create_user_3():
+    """Test adding a user to the database with a dictionary."""
+    user1 = create_user(user_data1)
+    with pytest.raises(ValueError):
+        create_user(user_data1)
+    
+def test_read_users():
+    """Test fetching all users from the database."""
+    create_user(user_data1)
+    create_user(user_data2)
+    users = read_users()
+    assert len(users) == 2
+    assert users[0].username == "testuser1"
+    assert users[1].username == "testuser2"
+    
+def test_read_user_by_password():
+    """Test fetching a user by password."""
+    create_user(user_data1)
+    user = read_user_by_password(UserCreate(username="testuser1", password="pw1"))
+    assert user.uid == 1
+
+def test_read_user_by_id_1():
+    """Test fetching a user by ID."""
+    create_user(user_data1)
+    user = read_user_by_id(1)
+    assert user.uid == 1
+    assert user.username == "testuser1"
+
+def test_read_user_by_id_2():
+    """Test fetching a user by ID."""
+    create_user(user_data1)
+    create_user(user_data2)
+    user = read_user_by_id(2)
+    assert user.uid == 2
+    assert user.username == "testuser2"
+
+def test_delete_user():
+    """Test deleting a user from the database."""
+    create_user(user_data1)
+    assert read_user_by_id(1)
+
+    delete_user(1)
+    users = read_users()
+    assert len(users) == 0
+    assert not read_user_by_id(1)
+
