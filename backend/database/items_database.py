@@ -85,12 +85,12 @@ def open_or_create_fridge_tables():
     # During testing, comment out following validation trigger
 
     # Confirm item_deletion_validation_trigger exists
-    # cursor.execute(db_commands["confirm_item_deletion_validation_trigger_exists"])
-    # trigger_exists_val = cursor.fetchone()
+    cursor.execute(db_commands["confirm_item_deletion_validation_trigger_exists"])
+    trigger_exists_val = cursor.fetchone()
 
     # # Create item_deletion_validation_trigger
-    # if not trigger_exists_val:
-    #     cursor.execute(db_commands["create_item_deletion_validation_trigger"])
+    if not trigger_exists_val:
+        cursor.execute(db_commands["create_item_deletion_validation_trigger"])
 
     # Confirm item_deletion_trigger exists
     cursor.execute(db_commands["confirm_item_deletion_trigger_exists"])
