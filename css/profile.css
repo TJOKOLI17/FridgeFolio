@@ -15,33 +15,75 @@ html {
 body {
     /* margin: 0; */
     background-color: hsl(214, 44%, 45%);
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
     min-height: 100vh;
     /* Ensure it fills the full viewport */
     color: white;
 }
 
-/* Utility Classes */
-.center {
+#account-features {
+    width: 98%;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    padding: 10px;
+    margin: 50px auto 0px auto;
+    border: 5px solid hsl(0, 0%, 18%);
+    border-radius: 10px;
 }
 
-.flex-column {
+#user-profile {
+    /* width: fit-content; */
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+    /* padding: 10px;
+
+    margin: 50px auto 0px auto;
+    border: 5px solid hsl(0, 0%, 18%);
+    border-radius: 10px; */
 }
+
+#account-delete-button {
+    width: 100%;
+    max-width: 150px;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: black;
+    background-color: hsl(153, 100%, 70%);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-left: auto;
+}
+
+#account-delete-button:hover {
+    background-color: hsl(0, 100%, 50%);
+    color: white;
+}
+
+h3 {
+    margin-bottom: 10px;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 1.2px;
+}
+
 
 /* Main Layout */
 main {
-    width: 100%;
+    width: 98%;
     height: fit-content;
-    max-width: 1200px;
-    margin: 20px auto;
+    /* max-width: 1200px; */
+    margin: 100px auto;
     /* Center with space above */
     display: flex;
     align-items: center;
@@ -49,45 +91,15 @@ main {
     /* Wrap content responsively */
     gap: 20px;
     /* Space between children */
-    padding: 30px;
+    padding: 20px;
     background-color: hsl(164, 81%, 30%);
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Logo Container */
-#homepage-logo-container {
-    flex: 1 1 300px;
-    /* Flexible sizing: at least 300px, can grow */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* max-width: 800px; */
-    border-radius: 50px;
-}
-
-#homepage-logo {
-    width: 100%;
-    border-radius: 5px;
-    /* max-width: 400px; */
-    /* Ensure logo doesn't grow too large */
-    height: auto;
-    object-fit: contain;
-    /* Maintain aspect ratio */
-}
-
-h2 {
+#username,
+#user-id {
     margin-bottom: 10px;
-}
-
-/* Login and Forms */
-.login-area {
-    flex: 1 1 300px;
-    /* Flexible sizing */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* gap: 20px; */
 }
 
 /* Form Styles */
@@ -104,31 +116,11 @@ h2 {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* #createAccountForm {
-    margin: 0;
-} */
-
-
-
-input {
-    width: 100%;
-    padding: 10px 15px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    outline: none;
-    transition: border-color 0.3s;
-}
-
-input:focus {
-    border-color: hsl(153, 100%, 70%);
-}
-
 #logoutSection {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 50px;
 }
 
 .login-state-button {
@@ -151,55 +143,45 @@ input:focus {
     background-color: hsl(153, 100%, 80%);
 }
 
-span {
-    color: hsl(0, 0%, 90%);
-    text-decoration: underline;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-span:hover {
-    color: hsl(153, 100%, 70%);
-}
-
 /* Responsive Design */
 
 /* mobile view */
 @media (max-width: 768px) {
     main {
-        width: fit-content;
         flex-direction: column;
         gap: 30px;
-    }
-
-    #homepage-logo {
-        max-width: 300px;
     }
 
     .all-forms {
         padding: 15px;
     }
 
-    input {
-        font-size: 0.9rem;
-        padding: 8px 12px;
+    #account-features {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 20px;
     }
+
+    /* #account-delete-button {
+        margin-left: 0;
+    } */
+
 }
 
 /* Extra small mobile view */
 @media (max-width: 480px) {
-    main {
-        width: fit-content;
-    }
-
-    input {
-        font-size: 0.8rem;
-        padding: 6px 10px;
-    }
-
     .login-state-button {
         padding: 8px;
         font-size: 0.9rem;
+    }
+
+    #account-features {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
     }
 }

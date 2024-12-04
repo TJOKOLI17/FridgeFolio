@@ -6,7 +6,7 @@ body {
 }
 
 #item-list-title {
-    margin-left: 5px;
+    margin-left: 15px;
 }
 
 #color-key {
@@ -22,6 +22,7 @@ body {
 .color-block {
     width: 20px;
     margin-left: 5px;
+    border-radius: 50px;
     background-color: red;
 }
 
@@ -105,4 +106,25 @@ body {
 
 .delete-btn:active {
     background-color: hsl(0, 100%, 45%);
+}
+
+#search-container {
+    margin: 15px;
+    text-align: center;
+}
+
+#search-bar {
+    width: 90%;
+    padding: 10px;
+    border: 2px solid hsl(214, 44%, 55%);
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: hsl(214, 44%, 95%);
+    color: hsl(214, 44%, 25%);
+}
+
+#search-bar:focus {
+    outline: none;
+    border-color: hsl(214, 44%, 65%);
+    background-color: hsl(214, 44%, 98%);
 }

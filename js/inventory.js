@@ -1,35 +1,7 @@
 import { addItem } from "./services/itemService.js";
-import { isExpired } from "./services/helperService.js";
+import { isExpired, redirectToHome, restrictPageContent } from "./services/sharedService.js";
 
 const itemSubmit = document.getElementById("item-submit")
-
-// itemSubmit.addEventListener('submit', async (event) => {
-//     event.preventDefault();
-//     const name = document.getElementById("name").value;
-//     const amount = document.getElementById("amount").value;
-//     const expYear = Number(document.getElementById("expYear").value);
-//     const expMonth = Number(document.getElementById("expMonth").value);
-//     const expDay = Number(document.getElementById("expDay").value);
-//     const expDate = `${expYear}/${expMonth}/${expDay}`
-
-//     if (typeof (expDay) !== "number" || typeof (expMonth) !== "number" || typeof (expYear) !== "number") {
-//         window.alert("Please enter valid numbers for date information")
-//     } else {
-//         try {
-//             const newItem = await addItem({
-//                 name: name,
-//                 amount: amount,
-//                 expDate: expDate
-//             })
-
-//             console.log(newItem.name, newItem.amount, newItem.expDate);
-//             itemSubmit.reset()
-//         } catch (error) {
-//             window.alert(error)
-//         }
-
-//     }
-// })
 
 itemSubmit.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -40,11 +12,11 @@ itemSubmit.addEventListener('submit', async (event) => {
     try {
         const newItem = await addItem({
             name: name,
+            uid: Number(localStorage.getItem("uid")),
             amount: amount,
             expDate: expDate
         })
 
-        console.log(newItem.name, newItem.amount, newItem.expDate);
         addToRecentlyAdded(newItem)
         itemSubmit.reset()
     } catch (error) {
@@ -54,11 +26,11 @@ itemSubmit.addEventListener('submit', async (event) => {
 
 function addToRecentlyAdded(newItem) {
     const recentlyAdded = document.getElementById('recently-added');
-    recentlyAdded.appendChild(toListItem(newItem))
+    recentlyAdded.appendChild(toRecentlyAddedListItem(newItem))
     recentlyAdded.appendChild(document.createElement('br'));;
 }
 
-const toListItem = (item) => {
+const toRecentlyAddedListItem = (item) => {
     const recentlyAdded = document.getElementById('recentlyAdded');
     // Create the list item
     const listItem = document.createElement('li');
@@ -90,3 +62,6 @@ const toListItem = (item) => {
 
     return listItem
 }
+
+restrictPageContent()
+redirectToHome()

@@ -1,14 +1,19 @@
 import { ItemModel } from "./models/ItemModel.js";
-import { getItems, updateItem, deleteItem } from "./services/itemService.js";
-import { isExpired } from "./services/helperService.js";
+import { getUserItems, updateItem } from "./services/itemService.js";
+import { toListItem, redirectToHome, restrictPageContent } from "./services/sharedService.js";
+let boundHandler;
 
 const populateInventoryList = async () => {
+    const itemListTitle = document.getElementById('item-list-title');
+    itemListTitle.textContent = `What's In Your Fridge, ${localStorage.getItem("username")}`
+
+    const inventoryList = document.getElementById('inventory-list');
+    inventoryList.replaceChildren();
     try {
-        const inventoryList = document.getElementById('inventory-list');
-        inventoryList.replaceChildren();
-        const fridgeItems = await getItems() // ItemModel[]
+        const fridgeItems = await getUserItems() // ItemModel[]
         fridgeItems.forEach((fridgeItem) => {
-            toListItem(fridgeItem);
+            inventoryList.append(toListItem(inventoryList, fridgeItem, false));
+            inventoryList.appendChild(document.createElement('br'));
         })
     } catch (error) {
         console.error(error);
@@ -16,51 +21,6 @@ const populateInventoryList = async () => {
 
     }
 }
-
-const toListItem = (item) => {
-    const inventoryList = document.getElementById('inventory-list');
-    // Create the list item
-    const listItem = document.createElement('li');
-
-    if (isExpired(item.expDate)) {
-        listItem.innerHTML = `
-                    <div class="item-model-container">
-                        <div class="item-name"><strong>Name: </strong> ${item.name}</div>
-                        <div class="item-amount"><strong> Amount: </strong> <span class="amt-num" onclick="enableEditMode(event, ${item.id}, '${item.name}', ${item.amount}, '${item.expDate}')">${item.amount}</span></div> 
-                        <div class="item-exp-date expired"><strong> Expiration Date: </strong> ${new Date(item.expDate).toDateString()}</div>
-                    </div>`;
-    } else if (isExpired(item.expDate, "today")) {
-        listItem.innerHTML = `
-                    <div class="item-model-container">
-                        <div class="item-name"><strong>Name: </strong> ${item.name}</div>
-                        <div class="item-amount"><strong> Amount: </strong> <span class="amt-num" onclick="enableEditMode(event, ${item.id}, '${item.name}', ${item.amount}, '${item.expDate}')">${item.amount}</span></div> 
-                        <div class="item-exp-date last-day"><strong> Expiration Date: </strong> ${new Date(item.expDate).toDateString()}</div>
-                    </div>`;
-    } else {
-        listItem.innerHTML = `
-                    <div class="item-model-container">
-                        <div class="item-name"><strong>Name: </strong> ${item.name}</div>
-                        <div class="item-amount"><strong> Amount: </strong> <span class="amt-num" onclick="enableEditMode(event, ${item.id}, '${item.name}', ${item.amount}, '${item.expDate}')">${item.amount}</span></div>
-                        <div class="item-exp-date"><strong> Expiration Date: </strong> ${new Date(item.expDate).toDateString()}</div>
-                    </div>`;
-    }
-
-    listItem.classList.add('list-item');
-
-    const deleteBtn = document.createElement('img');
-    deleteBtn.src = '../img/delete-icon.png';
-    deleteBtn.alt = 'Delete';
-    deleteBtn.classList.add('delete-btn');
-
-    // Attach the event listener for deleting the item
-    deleteBtn.addEventListener('click', () => deleteItemAndRefreshInventoryList(item));
-
-    // Append the button and list item
-    listItem.appendChild(deleteBtn);
-    inventoryList.appendChild(listItem);
-    inventoryList.appendChild(document.createElement('br'));
-};
-
 
 
 window.enableEditMode = enableEditMode;
@@ -75,61 +35,82 @@ function enableEditMode(event, ...item) {
     amountSpan.replaceWith(amountInput);  // Replace the span with the input
     amountInput.focus();  // Focus on the input for editing
 
-    amountInput.addEventListener("keydown", async (event) => {
-        if (event.key === "Enter") {
-            // event.preventDefault()
+    boundHandler = async (event) => {
+        const newValue = Number(String(amountInput.value));  // Convert the input value to a number
+        await handleAmountInputUpdate(event, origValue, newValue, amountInput, item)
+    };
 
-            // if (amountInput.value === "") {
-            //     console.log("value is empty");
-
-            // }
-            // console.log(`amountInput.value: ${amountInput.value}, type of amountInput.value ${typeof amountInput.value}`)
-            // console.log(`newValue: ${newValue}, type of newValue ${typeof newValue}`)
-            // Check if the new value is a valid number and greater than or equal to 0
-            const newValue = Number(String(amountInput.value));  // Convert the input value to a number
-
-            if (!isNaN(newValue) && newValue >= 0 && amountInput.value !== "") {
-                // Only refresh the item if the new value is different from the original value
-                if (origValue !== newValue) {
-                    await updateItemAndRefreshInventoryList(newValue, item);  // Call your refresh function with the new value
-                }
-                backToSpan(amountInput, newValue, item);
-                populateInventoryList()
-            } else {
-                backToSpan(amountInput, origValue, item);
-                populateInventoryList()
-            }
-        }
-    });
+    // Attach the keydown event listener with the actual event passed to the handler
+    amountInput.addEventListener("keydown", boundHandler);
 }
 
-const backToSpan = (input, value, item) => {
+
+const handleAmountInputUpdate = async (event, origValue, newValue, amountInput, item) => {
+    if (event.key === "Enter") {
+
+        if (!isNaN(newValue) && newValue >= 0 && amountInput.value !== "") {
+            // Only refresh the item if the new value is different from the original value
+            if (origValue !== newValue) {
+                await updateListItem(newValue, item);  // Call your refresh function with the new value
+            } else {
+            }
+            backToSpan(amountInput, newValue, item);
+            populateInventoryList()
+        } else {
+
+            backToSpan(amountInput, origValue, item);
+            populateInventoryList()
+        }
+    }
+}
+
+const updateInventoryList = (item_id) => {
+    const inventoryList = document.getElementById('inventory-list');
+    const listItems = document.querySelectorAll("li")
+
+    listItems = Array.of(listItems).filter((listItem) => { listItem })
+}
+
+
+const backToSpan = (amountInput, value, item) => {
+    amountInput.removeEventListener("keydown", boundHandler);
     const updatedSpan = document.createElement('span');
     updatedSpan.className = 'amt-num';
     updatedSpan.textContent = value;
 
     // Replace the input with the original value and re-add the event listener
-    updatedSpan.addEventListener('click', enableEditMode);
-    // updatedSpan.addEventListener('click', () => { enableEditMode(event, item) });
-    input.replaceWith(updatedSpan);
+    updatedSpan.addEventListener('click', (event) => enableEditMode(event, item));
+    amountInput.replaceWith(updatedSpan);
+
 }
 
 
-const updateItemAndRefreshInventoryList = async (newValue, item) => {
-    const modifiedItem = new ItemModel(item[0], item[1], newValue, item[3])
+const updateListItem = async (newValue, item) => {
+
+    const [ID, UID, NAME, EXPDATE] = [0, 1, 2, 4];
+    const modifiedItem = new ItemModel(item[ID], item[UID], item[NAME], newValue, item[EXPDATE])
     await updateItem(modifiedItem)
-    populateInventoryList()
 }
 
-const deleteItemAndRefreshInventoryList = async (deletedItem) => {
-    await deleteItem(deletedItem)
-    populateInventoryList()
-}
+const filterItems = () => {
+    const query = document.getElementById('search-bar').value.toLowerCase();
+    const listItems = document.querySelectorAll('#inventory-list > li, #inventory-list > br');
 
-// const checkifNan = () => {
-//     let num = Number("2-")
-//     console.log(`${num} is not a number: ${isNaN(num)}`)
-// }
+    listItems.forEach((item) => {
+        if (item.tagName === 'LI') {
+            const itemName = item.querySelector('.item-name').textContent.toLowerCase();
+            item.style.display = itemName.includes(query) ? '' : 'none';
+        } else if (item.tagName === 'BR') {
+            // Handle <br>: Show only if the previous <li> is visible
+            const prevElement = item.previousElementSibling;
+            item.style.display = prevElement && prevElement.style.display !== 'none' ? '' : 'none';
+        }
+    });
+};
 
-// checkifNan()
+document.getElementById('search-bar').addEventListener('input', filterItems);
+
+restrictPageContent()
+redirectToHome()
 populateInventoryList()
+
